@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mr.Keep</string>
+    <string name="action_settings">设置</string>
+    <string name="click_me">单击我</string>
+    <string name="site_name">名称</string>
+    <string name="user_name">登录名</string>
+    <string name="word_value">密码</string>
+    <string name="remark">备注</string>
+    <string name="go_add">添加 +</string>
+    <string name="go_back">返回</string>
+    
+    <string name="add">添加</string>
+    <string name="update">编辑</string>
+    <string name="delete">删除</string>
+    <string name="save">保存</string>
+    <string name="reg">注册</string>
+    
+    
+    <string name="main_title">Mr.Keep（beta）</string>
+    <string name="add_a_record">添加记录</string>
+    <string name="edit_a_record">正在编辑</string>
+    <string name="detail_a_record">记录详情</string>
+    <string name="data_management">备份与恢复</string>
+    <string name="login_p_change">修改登录密码</string>
+    
+    <string name="input_login_password">Keep密码保管箱</string>
+    <string name="set_login_old_password">当前密码</string>
+    <string name="set_login_new_password">新密码</string>
+    <string name="set_login_new_password2">再次确认</string>
+    <string name="set_login_password">初始密码</string>
+    <string name="set_login_password2">再次确认</string>
+    
+    <string name="login_mess">登录</string>
+    
+    
+    <string name="data_bakup">数据备份</string>
+    <string name="data_bakup_description">数据将以加密的形式存储在您的设备中。</string>
+    <string name="data_recover">数据恢复</string>
+    <string name="data_recover_description">程序会读取指定目录中的备份文件。</string>
+    <string name="data_mess_import">批量导入</string>
+    <string name="data_mess_import_description">本程序支持自定义xml文件批量导入账户及密码信息，免去初期手工录入的繁琐。</string>
+    
+    
+	<string name="dialog_update_title">更新</string>
+	<string name="dialog_update_msg">发现新版本，版本号：</string>
+	<string name="dialog_update_msg2">，是否立即更新？更新前请确认已经备份重要数据。</string>
+	<string name="dialog_update_btnupdate">更新</string>
+	<string name="dialog_update_btnnext">下次再说</string>
+	<string name="dialog_downloading_msg">正在下载更新。。。</string>
+	<string name="dialog_alert_title">警告</string>
+	<string name="dialog_downfailed_btndown">重新下载</string>
+	<string name="dialog_downfailed_btnnext">以后再说</string>
+	<string name="dialog_error_title">错误</string>
+	<string name="dialog_downfailed_msg">下载更新失败，是否重试？</string>
+    
+    
+
+</resources>

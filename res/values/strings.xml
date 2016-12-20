@@ -17,6 +17,10 @@
     <string name="save">保存</string>
     <string name="reg">注册</string>
     
+    <string name="what_updated">1.代码优化\n2.Menu模块顺序调整\n3.关闭更新功能</string>
+    <string name="partners">\@石头大风吹</string>
+    <string name="about_keep">Keep，\n就是一个密码保险箱，\n无论你的密码再多再复杂，\n她都能安全地为您储存起来，\n只需记住一组能打开它的密码，\n即可高枕无忧。\n\n问题反馈可访问以下地址\nYaiba.net</string>
+    
     
     <string name="main_title">Mr.Keep（beta）</string>
     <string name="add_a_record">添加记录</string>
@@ -33,7 +37,7 @@
     <string name="set_login_password2">再次确认</string>
     
     <string name="login_mess">登录</string>
-    
+    <string name="record_list_search">查找&#8230;</string>
     
     <string name="data_bakup">数据备份</string>
     <string name="data_bakup_description">数据将以加密的形式存储在您的设备中。</string>
@@ -55,6 +59,19 @@
 	<string name="dialog_error_title">错误</string>
 	<string name="dialog_downfailed_msg">下载更新失败，是否重试？</string>
     
+	
+	<string name="menu_inport_export">备份与恢复</string>
+	<string name="menu_change_login_password">修改登录密码</string>
+	<string name="menu_whatupdate">更新说明</string>
+	<string name="menu_checkupdate">检查更新</string>
+	<string name="menu_support">技术支持</string>
+	<string name="menu_about">关于Keep</string>
+	
+	
+	
+	
+	
+	
     
 
 </resources>

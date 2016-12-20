@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -38,16 +40,19 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	
 	private static final int MENU_ABOUT = 0;
 	private static final int MENU_SUPPORT = 1;
-	private static final int MENU_VERSION = 2;
+	private static final int MENU_WHATUPDATE = 2;
 	private static final int MENU_IMPORT_EXPOERT = 3;
 	private static final int MENU_CHANGE_LOGIN_PASSWORD = 4;
+	private static final int MENU_CHECK_UPDATE = 5;
 	private PasswordDB PasswordDB;
 	private Cursor mCursor;
+	private Context getResource;
 	
 	private EditText SiteName;
 	private EditText UserName;
 	private EditText PasswordValue;
 	private EditText Remark;
+	private EditText SearchInput;
 	private ListView RecordList;
 	 
 	private int RECORD_ID = 0;
@@ -58,7 +63,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_list);
-		setUpViews();
+		setUpViews("all",null);
 		Button bn_go_add = (Button)findViewById(R.id.go_add);
 		bn_go_add.setOnClickListener(new OnClickListener(){
 			   public void  onClick(View v)     
@@ -70,26 +75,40 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 			   }  
 			  });
 		
-		/*Button bn_update = (Button)findViewById(R.id.update);
-		bn_update.setOnClickListener(new OnClickListener(){
-			   public void  onClick(View v)     
-			   {  
-			    update();
-			   }  
-			  });
 		
-		Button bn_delete = (Button)findViewById(R.id.delete);
-		bn_delete.setOnClickListener(new OnClickListener(){
-			   public void  onClick(View v)     
-			   {  
-			    delete();
-			   }  
-			  });*/
+		SearchInput = (EditText)findViewById(R.id.searchInput);
+		SearchInput.clearFocus();
+		SearchInput.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            	if(SearchInput.getText().toString().trim().length()!=0){
+            		try {
+            			setUpViews("search",SearchInput.getText().toString().trim());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+            	} else {
+            		setUpViews("all",null);
+            	}
+            }
+            
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            	//Toast.makeText(LoginActivity.this, "beforeTextChanged", Toast.LENGTH_SHORT).show();
+            }
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+            	//Toast.makeText(LoginActivity.this, "afterTextChanged", Toast.LENGTH_SHORT).show();
+            }
+
+		});
 		
 		//检查是否有更新
         //如果有更新提示下载
-        updateMan = new UpdateManager(MainActivity.this, appUpdateCb);
-        updateMan.checkUpdate();
+        //updateMan = new UpdateManager(MainActivity.this, appUpdateCb);
+        //updateMan.checkUpdate();
 
 	}
 	
@@ -104,6 +123,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             hasTask = true;
         }
     };
+	
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -123,9 +143,14 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     }
     
 
-	public void setUpViews(){
+	public void setUpViews(String type, String value){
 		PasswordDB = new PasswordDB(this);
-		mCursor = PasswordDB.getAll();
+		if("all".equals(type)){
+			mCursor = PasswordDB.getAll("id desc");
+		} else if("search".equals(type)) {
+			mCursor = PasswordDB.getForSearch(value);
+		}
+		
 		 
 		/*SiteName = (EditText)findViewById(R.id.site_name);
 		UserName = (EditText)findViewById(R.id.login_name);
@@ -134,9 +159,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();  
         
-        for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext())  
-        {  
-        	int resNoColumn = mCursor.getColumnIndex("id");  
+        for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {  
             int nameColumn = mCursor.getColumnIndex("site_name");  
             int phoneColumn = mCursor.getColumnIndex("user_name");  
             /*String resNo = "["+mCursor.getString(resNoColumn)+"]"; */
@@ -191,7 +214,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  
                     public void onClick(DialogInterface dialog, int whichButton) {  
                     	delete();
-        				setUpViews();
+                    	setUpViews("all",null);
                     }  
                 });
 				builder.setNegativeButton("取消", null);
@@ -204,11 +227,12 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(Menu.NONE, MENU_ABOUT, 0, "关于Keep");
-		menu.add(Menu.NONE, MENU_SUPPORT, 0, "技术支持");
-		menu.add(Menu.NONE, MENU_VERSION, 0, "版本");
-		menu.add(Menu.NONE, MENU_IMPORT_EXPOERT, 0, "备份与恢复");
-		menu.add(Menu.NONE, MENU_CHANGE_LOGIN_PASSWORD, 0, "修改登录密码");
+		menu.add(Menu.NONE, MENU_IMPORT_EXPOERT, 0, this.getString(R.string.menu_inport_export));//备份与恢复
+		menu.add(Menu.NONE, MENU_CHANGE_LOGIN_PASSWORD, 0, this.getString(R.string.menu_change_login_password));//修改登录密码
+		menu.add(Menu.NONE, MENU_WHATUPDATE, 0, this.getString(R.string.menu_whatupdate));//更新信息
+		menu.add(Menu.NONE, MENU_CHECK_UPDATE, 0, this.getString(R.string.menu_checkupdate));//检查更新
+		menu.add(Menu.NONE, MENU_SUPPORT, 0, this.getString(R.string.menu_support));//技术支持
+		menu.add(Menu.NONE, MENU_ABOUT, 0, this.getString(R.string.menu_about));//关于Keep
 		return true;
 	}
 	 
@@ -222,21 +246,31 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		switch (item.getItemId())
 		{
 			case MENU_ABOUT:
-				title = "关于Keep";
-				msg = "Keep 就像一个密码保险箱，无论你的密码再多再复杂，它都能安全地为您储存起来，以后你只需记住一组能打开它的密码即可安枕无忧";
+				title = this.getString(R.string.menu_about);//关于Keep
+				msg = this.getString(R.string.about_keep);
+				msg = msg + "\n\n";
+				msg = msg + "版本："+getAppVersion();
 				showAboutDialog(title,msg);
 			break;
 			case MENU_SUPPORT:
-				title = "技术支持";
-				msg = "石头(码农)、肥球(赞助商)、ezsun(仓库)";
+				title = this.getString(R.string.menu_support);//技术支持
+				msg = this.getString(R.string.partners);
 				showAboutDialog(title,msg);
 			break;
-			case MENU_VERSION:
-				title = "版本";
-				msg = getAppVersion();
+			case MENU_WHATUPDATE:
+				title = this.getString(R.string.menu_whatupdate);//更新信息
+				msg = "更新内容:\n";
+				msg = msg + this.getString(R.string.what_updated);
+				//msg = "当前版本："+getAppVersion()+"(增加双服务器检测更新机制)";
 				showAboutDialog(title,msg);
 			break;
-			case MENU_IMPORT_EXPOERT:
+			case MENU_CHECK_UPDATE:
+				title = this.getString(R.string.menu_checkupdate);//检查更新
+				msg = "1.增加双服务器检测更新机制\n2.检查更新\n以上功能由于服务器空间到期，暂未启用";
+				msg = msg + "";
+				showAboutDialog(title,msg); 
+			break;
+			case MENU_IMPORT_EXPOERT://备份与恢复
 				Intent mainIntent = new Intent(MainActivity.this, DataManagementActivity.class);
 			    startActivity(mainIntent);
 			    setResult(RESULT_OK, mainIntent);  
@@ -260,9 +294,6 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		builder.setPositiveButton("确认", null);
 		builder.create().show();
 	} 
-    
-    
-    
 	 
 	public void delete(){
 		if (RECORD_ID == 0) {

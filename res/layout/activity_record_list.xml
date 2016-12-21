@@ -10,7 +10,21 @@
    <FrameLayout 
     android:layout_width="fill_parent"
     android:layout_height="50dp" >
+       <!-- 为了不让edittext组件获得焦点 -->
+	   <LinearLayout 
+			android:focusable="true" 
+			android:focusableInTouchMode="true" 
+			android:layout_width="0px" 
+			android:layout_height="0px"/> 
 
+       <EditText
+           android:id="@+id/searchInput"
+	       android:layout_width="250dp"
+	       android:layout_height="50dp"
+		   android:layout_marginLeft="10dp"
+		   android:hint="@string/record_list_search"
+            />
+       
         <Button
            android:id="@+id/go_add"
            android:layout_gravity="right|center_vertical"

@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
@@ -34,6 +35,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.yaiba.keep.PasswordDB;
+import com.yaiba.keep.UpdateTask;
 
 
 public class MainActivity extends Activity implements  AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
@@ -56,6 +58,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	 
 	private int RECORD_ID = 0;
 	private UpdateManager updateMan;
+	private UpdateTask updateTask;
 	private ProgressDialog updateProgressDialog;
 
 	@Override
@@ -108,6 +111,10 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
         //如果有更新提示下载
         //updateMan = new UpdateManager(MainActivity.this, appUpdateCb);
         //updateMan.checkUpdate();
+		
+		//updateTask = new UpdateTask(MainActivity.this,true);
+		//updateTask.update();
+		
 
 	}
 	
@@ -261,14 +268,16 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				title = this.getString(R.string.menu_whatupdate);//更新信息
 				msg = msg + this.getString(R.string.what_updated);
 				msg = msg + "\n\n\n";
-				//msg = "当前版本："+getAppVersion()+"(增加双服务器检测更新机制)";
 				showAboutDialog(title,msg);
 			break;
 			case MENU_CHECK_UPDATE:
 				title = this.getString(R.string.menu_checkupdate);//检查更新
-				msg = "由于服务器空间到期，暂未启用";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
-				msg = msg + "\n\n";
-				showAboutDialog(title,msg); 
+				msg = "";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
+				
+				updateTask = new UpdateTask(MainActivity.this,true);
+				updateTask.update();
+				
+				//showAboutDialog(title,msg); 
 			break;
 			case MENU_IMPORT_EXPOERT://备份与恢复
 				Intent mainIntent = new Intent(MainActivity.this, DataManagementActivity.class);
@@ -286,14 +295,41 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		return true;
 	}
 	 
-    private void showAboutDialog(String title,String msg){
+	public void showAboutDialog(String title,String msg){
 		AlertDialog.Builder builder= new AlertDialog.Builder(this);
 		builder.setIcon(android.R.drawable.ic_dialog_info);
 		builder.setTitle(title);
 		builder.setMessage(msg);
 		builder.setPositiveButton("确认", null);
 		builder.create().show();
-	} 
+	}
+	
+	public void showConfirmDialog(String title,String msg){
+		Dialog alertDialog = new AlertDialog.Builder(this).   
+            setTitle("确定删除？").   
+            setMessage("您确定删除该条信息吗？").   
+            setIcon(R.drawable.ic_launcher).   
+            setPositiveButton("确定", new DialogInterface.OnClickListener() {   
+                   
+                @Override   
+                public void onClick(DialogInterface dialog, int which) {   
+                    // TODO Auto-generated method stub    
+                }   
+            }).   
+            setNegativeButton("取消", new DialogInterface.OnClickListener() {   
+                   
+                @Override   
+                public void onClick(DialogInterface dialog, int which) {   
+                    // TODO Auto-generated method stub    
+                }   
+            }).   
+            create();   
+    alertDialog.show();
+	}
+	
+	
+	
+	
 	 
 	@SuppressWarnings("deprecation")
 	public void delete(){

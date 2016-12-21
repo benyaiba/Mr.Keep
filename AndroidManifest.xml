@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yaiba.keep"
     android:versionCode="5"
-    android:versionName="0.1.4.6" >
+    android:versionName="0.1.5.0" >
 	<!--versionName=A.B.C.D versionCode=C-->
     <uses-sdk
         android:minSdkVersion="14"

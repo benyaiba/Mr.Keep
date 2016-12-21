@@ -18,7 +18,8 @@
     <string name="reg">注册</string>
     
     <string name="what_updated">
-        0.1.4.6\n代码移至GIT管理
+        0.1.5.0\n增加新版本检查功能
+        \n\n0.1.4.6\n代码移至GIT管理
         \n\n0.1.4.5\n代码结构优化
         \n\n0.1.4.4\n1.精简代码\n2.Menu模块顺序调整\n3.关闭更新（检测）功能
         \n\n0.1.4.3\n修正其中一个服务器挂机导致程序异常的问题
@@ -79,7 +80,12 @@
 	<string name="dialog_downfailed_btnnext">以后再说</string>
 	<string name="dialog_error_title">错误</string>
 	<string name="dialog_downfailed_msg">下载更新失败，是否重试？</string>
-    
+	
+	<string name="update_already_latest">已经是最新版本</string>
+	<string name="update_new_seg1">发现新版本，版本号：</string>
+	<string name="update_new_seg2">\n正在下载更新</string>
+	<string name="update_new_seg3">\n正在下载更新</string>
+	<string name="update_error">更新出错</string>    
 	
 	<string name="menu_inport_export">备份与恢复</string>
 	<string name="menu_change_login_password">修改登录密码</string>

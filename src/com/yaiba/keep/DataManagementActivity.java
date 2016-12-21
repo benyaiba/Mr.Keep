@@ -28,7 +28,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class DataManagementActivity extends Activity {
 	private PasswordDB PasswordDB;

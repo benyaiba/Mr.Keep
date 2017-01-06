@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+                                        android:orientation="vertical" 
+                                        android:layout_width="fill_parent" 
+                                        android:layout_height="fill_parent"> 
+                                        
+    <FrameLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_gravity="left|center_vertical"
+	        android:layout_width="40dp"
+	        android:layout_height="40dp"
+		    android:layout_marginLeft="10dp"
+	        android:background="@drawable/list_01" />
+
+    </FrameLayout>
+    
+	<LinearLayout android:orientation="vertical" 
+                  android:layout_width="fill_parent" 
+                  android:layout_height="fill_parent"
+                  android:layout_margin="20dp"> 
+     <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="12sp" 
+          android:text="@string/site_name" />
+      <TextView
+          android:id="@+id/site_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="22sp"
+          android:paddingBottom="10dip" />
+      
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="12sp" 
+          android:text="@string/user_name" />
+      <TextView
+          android:id="@+id/user_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="22sp"
+          android:paddingBottom="10dip" />
+      
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="12sp"
+          android:text="@string/word_value" />
+      <EditText
+          android:id="@+id/word_value"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="22sp"
+          android:enabled="false"
+          android:focusable="false"
+          android:inputType=""
+          android:paddingBottom="10dip" />
+      
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="12sp" 
+          android:text="@string/remark" />
+      <TextView
+          android:id="@+id/remark"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="22sp"
+          android:paddingBottom="10dip"/>
+      
+
+	</LinearLayout>
+
+</LinearLayout>
+  

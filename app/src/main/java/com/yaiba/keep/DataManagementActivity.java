@@ -28,6 +28,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+import static android.R.id.checkbox;
 
 public class DataManagementActivity extends Activity {
 	private PasswordDB PasswordDB;
@@ -40,6 +44,8 @@ public class DataManagementActivity extends Activity {
 	//private String fileNamePre = "keep_";
 	private String fileNameSuff = ".xml";
 	private String fileNameMass = "keepres_mass.xml";
+
+	private CheckBox encode;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,50 +86,53 @@ public class DataManagementActivity extends Activity {
 				   AlertDialog.Builder builder= new AlertDialog.Builder(DataManagementActivity.this);
 				   builder.setIcon(android.R.drawable.ic_dialog_info);
 				   builder.setTitle("选择要恢复的文件,恢复后原有记录将被清空");
-					
+
 				   List<String> bakupFileList = new ArrayList<String>();
-				   
-				   String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME; 
-				   
-				   File[] files = new File(keepPath).listFiles(); 
-				   
+
+				   String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
+
+				   File[] files = new File(keepPath).listFiles();
+
 				   for (int i = 0; i < files.length; i++) {
 					   File file = files[i];
 					   if (checkIsXMLFile(file.getPath())) {
-						   bakupFileList.add(file.getName());
+						   //判断文件名中是否不包含20170216020803!!!!!.xml 这种文件，这种文件是未加密的文件，禁止在列表中显示
+						   if(file.getName().indexOf("!")==-1){
+							   bakupFileList.add(file.getName());
+						   }
 					   }
-					  } 
-				   
+					  }
+
 				   if(bakupFileList.size()<=0){
-					   
+
 					   builder.setMessage("没有找到可用来恢复的备份文件");
 					   builder.setNegativeButton("取消", null);
-					   
+
 				   } else {
 					   Collections.reverse(bakupFileList);
-					   
+
 					   bakFileArray = bakupFileList.toArray(new String[bakupFileList.size()]);
-					   
-					   
+
+
 					   builder.setIcon(android.R.drawable.ic_dialog_alert);
-					   builder.setSingleChoiceItems(bakFileArray, 0, new DialogInterface.OnClickListener() {  
-		                    public void onClick(DialogInterface dialog, int index) {  
+					   builder.setSingleChoiceItems(bakFileArray, 0, new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int index) {
 		                    	selectBakupFileIndex = index;
 		                    	//Toast.makeText(DataManagementActivity.this, "selectBakupFileIndex:"+selectBakupFileIndex , Toast.LENGTH_SHORT).show();
-		                    }  
+		                    }
 		                });
-					   builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  
-		                    public void onClick(DialogInterface dialog, int whichButton) {  
+					   builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int whichButton) {
 		                    	dataRecover(bakFileArray[selectBakupFileIndex]);
 		                    	//Toast.makeText(DataManagementActivity.this, "selectBakupFileIndex:"+selectBakupFileIndex , Toast.LENGTH_SHORT).show();
-		                    }  
+		                    }
 		                });
 					   builder.setNegativeButton("取消", null);
 					   builder.create().show();
-					   
-					   
-					   
-					   
+
+
+
+
 //					   builder.setMessage("程序将读取SD卡中的备份文件"+fileName+"，恢复后原有记录将被清空。确定要执行吗？");
 //						builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  
 //		                    public void onClick(DialogInterface dialog, int whichButton) {  
@@ -132,12 +141,12 @@ public class DataManagementActivity extends Activity {
 //		                });
 //						builder.setNegativeButton("取消", null);
 //						builder.create().show();
-						
-					   
-					   
+
+
+
 				   }
 
-			   }  
+			   }
 			  });
 		
 		Button bn_data_mess_import = (Button)findViewById(R.id.data_mess_import);
@@ -183,32 +192,66 @@ public class DataManagementActivity extends Activity {
 		//Toast.makeText(this, "他很懒，备份程序还没做好", Toast.LENGTH_SHORT).show();
 		PasswordDB = new PasswordDB(this);
 		mCursor = PasswordDB.getAll(null);
-		
-		try {
-			boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-		
-			if (sdCardExist) {
-				String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "//" + FILE_DIR_NAME;
-				Date dt = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");  
-				//String fileName = fileNamePre + sdf.format(dt)+ fileNameSuff;
-				String fileName = sdf.format(dt)+ fileNameSuff;
-				
-				File f = new File(baseDir + "//"+ fileName );
-				if(!f.getParentFile().exists()){  
-					f.getParentFile().mkdirs();
-				}  
-				if(!f.exists()){  
-					f.createNewFile();
-				}  
-				FileWriter fileWriter = new FileWriter(f,false);
-				BufferedWriter bf = new BufferedWriter(fileWriter);
-				bf.write(writeToString(mCursor));
-				bf.flush();
-				showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡。");
+
+		//检查目录并确定生成目录结构
+		boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+		String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "//" + FILE_DIR_NAME;
+		Date dt = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+		//String fileName = fileNamePre + sdf.format(dt)+ fileNameSuff;
+
+
+		encode = (CheckBox)findViewById(R.id.encode);
+		if(encode.isChecked()){
+			//showAboutDialog("准备","正在处理加密数据");
+			try {
+				if (sdCardExist) {
+					String fileName = sdf.format(dt)+ fileNameSuff;
+					File f = createFile(baseDir,fileName);
+
+					FileWriter fileWriter = new FileWriter(f,false);
+					BufferedWriter bf = new BufferedWriter(fileWriter);
+					bf.write(writeToString(mCursor,true));
+					bf.flush();
+					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡。(已加密处理)");
+				}
+			} catch (IOException e) {
+				showAboutDialog("错误","处理数据时出错，文件未生成");
 			}
-		} catch (IOException e) {}
-	
+
+		} else {
+			//showAboutDialog("准备","正在处理未加密数据");
+			try {
+				if (sdCardExist) {
+					String fileName = sdf.format(dt) + "!!!!!"+ fileNameSuff;
+					File f = createFile(baseDir, fileName);
+
+					FileWriter fileWriter = new FileWriter(f,false);
+					BufferedWriter bf = new BufferedWriter(fileWriter);
+					bf.write(writeToString(mCursor,false));
+					bf.flush();
+					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡。(备份数据未加密，请妥善保存。)");
+				}
+			} catch (IOException e) {
+				showAboutDialog("错误","处理数据时出错，文件未生成");
+			}
+		}
+	}
+
+
+	public File createFile(String baseDir, String fileName) {
+		File f = new File(baseDir + "//"+ fileName );
+		if(!f.getParentFile().exists()){
+			f.getParentFile().mkdirs();
+		}
+		if(!f.exists()){
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return f;
 	}
 	
 	public void dataRecover(String fileName){
@@ -238,7 +281,7 @@ public class DataManagementActivity extends Activity {
 	}
  	
  	
- 	private String writeToString(Cursor mCursor){
+ 	private String writeToString(Cursor mCursor,Boolean encode){
  	    XmlSerializer serializer = Xml.newSerializer();
  	    StringWriter writer = new StringWriter();
  	    try {
@@ -254,7 +297,8 @@ public class DataManagementActivity extends Activity {
 					serializer.attribute("", "id", mCursor.getString(0));
 					serializer.attribute("", "site", mCursor.getString(1));
 					serializer.attribute("", "user", mCursor.getString(2));
-					serializer.attribute("", "password", mCursor.getString(3));
+					//加密场合原样输出，未加密场合解密处理
+					serializer.attribute("", "password", encode?mCursor.getString(3):DES.decryptDES(mCursor.getString(3)));
 					serializer.attribute("", "mark", mCursor.getString(4));
 					serializer.endTag("", "record");
 

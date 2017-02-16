@@ -2,9 +2,108 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
                                         android:orientation="vertical" 
                                         android:layout_width="fill_parent" 
-                                        android:layout_height="fill_parent"> 
-                                        
-    <FrameLayout 
+                                        android:layout_height="fill_parent">
+
+	<LinearLayout android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
+                  android:layout_marginTop="10dp"
+		android:weightSum="1">
+
+
+		<TextView
+          android:layout_width="123dp"
+          android:layout_height="wrap_content"
+          android:text="@string/data_bakup"
+          android:textSize="22sp"
+			android:textStyle="normal|bold" />
+
+		<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="18sp"
+		android:text="@string/data_bakup_description" />
+
+
+		<CheckBox
+			android:text="使用加密"
+			android:layout_width="141dp"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:id="@+id/encode"
+			android:lineSpacingExtra="8sp"
+			android:duplicateParentState="false"
+			android:checked="true"
+			android:layout_marginLeft="0dp"
+			android:paddingLeft="0dp"
+			android:paddingTop="0dp"
+			android:layout_marginTop="5dp"
+			android:layout_weight="0.11" />
+
+		<Button
+          android:id="@+id/data_bakup"
+          android:layout_gravity="right|center_vertical"
+          android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+		  android:layout_marginLeft="10dp"
+	      android:background="@drawable/bakup_01"
+			android:layout_weight="0.06" />
+
+
+		<TextView
+          android:layout_width="120dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="30dip"
+          android:text="@string/data_recover"
+          android:textSize="22sp"
+			android:textStyle="normal|bold" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="18sp"
+          android:text="@string/data_recover_description" />
+      <Button
+          android:id="@+id/data_recover"
+          android:layout_gravity="right|center_vertical"
+          android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+		  android:layout_marginLeft="10dp"
+	      android:background="@drawable/recory_01"
+		  android:layout_weight="0.08" />
+
+
+
+
+
+      <TextView
+          android:layout_width="125dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="30dip"
+          android:text="@string/data_mess_import"
+          android:textSize="22sp"
+		  android:textStyle="normal|bold" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="18sp"
+          android:text="@string/data_mess_import_description" />
+
+      <Button
+          android:id="@+id/data_mess_import"
+          android:layout_gravity="right|center_vertical"
+          android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+		  android:layout_marginLeft="10dp"
+	      android:background="@drawable/mess_import_01"
+		  android:layout_weight="0.08" />
+
+	</LinearLayout>
+
+	<FrameLayout
     android:layout_width="fill_parent"
     android:layout_height="50dp" >
 
@@ -18,83 +117,6 @@
         
 
     </FrameLayout>
-
-	<LinearLayout android:orientation="vertical" 
-                  android:layout_width="fill_parent" 
-                  android:layout_height="fill_parent"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginTop="10dp">
-
-     
-      <TextView
-          android:layout_width="123dp"
-          android:layout_height="wrap_content"
-          android:text="@string/data_bakup"
-          android:textSize="22sp" />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="12sp" 
-          android:text="@string/data_bakup_description" />
-
-      <Button
-          android:id="@+id/data_bakup"
-          android:layout_gravity="right|center_vertical"
-          android:layout_width="40dp"
-	      android:layout_height="40dp"
-		  android:layout_marginLeft="10dp"
-	      android:background="@drawable/bakup_01" />
-      
-      
-      
-      <TextView
-          android:layout_width="120dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="30dip"
-          android:text="@string/data_recover"
-          android:textSize="22sp" />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="12sp" 
-          android:text="@string/data_recover_description" />
-      <Button
-          android:id="@+id/data_recover"
-          android:layout_gravity="right|center_vertical"
-          android:layout_width="40dp"
-	      android:layout_height="40dp"
-		  android:layout_marginLeft="10dp"
-	      android:background="@drawable/recory_01" />
-      
-      
-      
-      
-      
-      <TextView
-          android:layout_width="125dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="30dip"
-          android:text="@string/data_mess_import"
-          android:textSize="22sp" />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="12sp" 
-          android:text="@string/data_mess_import_description" />
-
-      <Button
-          android:id="@+id/data_mess_import"
-          android:layout_gravity="right|center_vertical"
-          android:layout_width="40dp"
-	      android:layout_height="40dp"
-		  android:layout_marginLeft="10dp"
-	      android:background="@drawable/mess_import_01" />
-
-	</LinearLayout>
 
 </LinearLayout>
   

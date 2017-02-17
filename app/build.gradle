@@ -17,11 +17,16 @@ android {
         }
     }
 
+
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace("app","${defaultConfig.applicationId }_${defaultConfig.versionName}")
+
+                //读取AndroidManifest.xml文件中的versionName属性，用于生成发布文件名
+                def androidManifest = new XmlSlurper().parse("app\\src\\main\\AndroidManifest.xml")
+
+                def fileName = outputFile.name.replace("app","${defaultConfig.applicationId }_${androidManifest['@android:versionName']}")
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }

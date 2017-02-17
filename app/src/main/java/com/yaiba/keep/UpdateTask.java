@@ -62,7 +62,7 @@ public class UpdateTask extends AsyncTask<String, String, String> {
         try {
             JSONObject release = new JSONObject(result);
 
-            // Get current version
+            //获取当前版本
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             String version = pInfo.versionName;
 

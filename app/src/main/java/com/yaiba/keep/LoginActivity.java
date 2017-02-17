@@ -4,7 +4,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,7 +16,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 public class LoginActivity extends Activity {
 	
@@ -24,6 +29,8 @@ public class LoginActivity extends Activity {
 	private EditText Password;
 	private EditText Password2;
 	private EditText loginPassword;
+
+	private Context context;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,7 @@ public class LoginActivity extends Activity {
 			
 		}else{
 			setContentView(R.layout.login);
-			
+
 			loginPassword = (EditText) findViewById(R.id.login_password);
 			loginPassword.addTextChangedListener(new TextWatcher() {
                         
@@ -85,6 +92,11 @@ public class LoginActivity extends Activity {
         });
 
 		}
+
+		//设置首页版本
+		TextView textView = (TextView) findViewById(R.id.version_id);
+		textView.setText(CustomUtils.getVersion(this));
+
 	}
 	
 	

@@ -4,119 +4,255 @@
                                         android:layout_width="fill_parent" 
                                         android:layout_height="fill_parent">
 
+	<!--backup区域开始-->
 	<LinearLayout android:orientation="vertical"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginTop="10dp"
+		android:layout_width="fill_parent"
+		android:layout_height="125dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:layout_marginTop="10dp"
 		android:weightSum="1">
 
-
-		<TextView
-          android:layout_width="123dp"
-          android:layout_height="wrap_content"
-          android:text="@string/data_bakup"
-          android:textSize="22sp"
-			android:textStyle="normal|bold" />
-
-		<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textSize="18sp"
-		android:text="@string/data_bakup_description" />
-
-
-		<CheckBox
-			android:text="使用加密"
-			android:layout_width="141dp"
-			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:id="@+id/encode"
-			android:lineSpacingExtra="8sp"
-			android:duplicateParentState="false"
-			android:checked="true"
-			android:layout_marginLeft="0dp"
-			android:paddingLeft="0dp"
-			android:paddingTop="0dp"
-			android:layout_marginTop="5dp"
-			android:layout_weight="0.11" />
-
-		<Button
-          android:id="@+id/data_bakup"
-          android:layout_gravity="right|center_vertical"
-          android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-		  android:layout_marginLeft="10dp"
-	      android:background="@drawable/bakup_01"
-			android:layout_weight="0.06" />
-
-
-		<TextView
-          android:layout_width="120dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="30dip"
-          android:text="@string/data_recover"
-          android:textSize="22sp"
-			android:textStyle="normal|bold" />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="18sp"
-          android:text="@string/data_recover_description" />
-      <Button
-          android:id="@+id/data_recover"
-          android:layout_gravity="right|center_vertical"
-          android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-		  android:layout_marginLeft="10dp"
-	      android:background="@drawable/recory_01"
-		  android:layout_weight="0.08" />
+		<!--左右布局，依次是按钮、右侧文字开始-->
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="110dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginTop="10dp"
+			android:weightSum="1">
 
 
 
+			<!--上下布局，右侧文字开始-->
+			<LinearLayout android:orientation="vertical"
+					android:layout_width="285dp"
+					android:layout_height="100dp"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="0dp"
+					android:weightSum="1"
+				android:layout_weight="0.14">
 
+				<TextView	android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_bakup"
+                    android:textSize="22sp"
+                    android:textStyle="normal|bold"
+					android:id="@+id/textView" />
 
-      <TextView
-          android:layout_width="125dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="30dip"
-          android:text="@string/data_mess_import"
-          android:textSize="22sp"
-		  android:textStyle="normal|bold" />
+				<TextView	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:text="@string/data_bakup_description" />
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="18sp"
-          android:text="@string/data_mess_import_description" />
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_bakup_description_dir"
+					android:textStyle="normal|italic"
+					android:textColor="@color/gray" />
 
-      <Button
-          android:id="@+id/data_mess_import"
-          android:layout_gravity="right|center_vertical"
-          android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-		  android:layout_marginLeft="10dp"
-	      android:background="@drawable/mess_import_01"
-		  android:layout_weight="0.08" />
+					<CheckBox	android:id="@+id/encode"
+						android:text="@string/menu_useEncode"
+						android:layout_width="140dp"
+						android:layout_height="wrap_content"
+						android:layout_gravity="left"
+						android:textSize="16sp"
+						android:duplicateParentState="false"
+						android:checked="true"
+						android:layout_marginLeft="0dp"
+						android:paddingLeft="0dp"
+						android:paddingTop="0dp"
+						android:layout_weight="0.11" />
+
+				</LinearLayout>
+			<!--上下布局，右侧文字结束-->
+
+			<Button android:id="@+id/data_bakup"
+				android:layout_marginTop="10dp"
+				android:layout_width="49dp"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:background="@drawable/bakup_01" />
+
+		</LinearLayout>
+		<!--左右布局，依次是按钮、右侧文字结束-->
+
+		<!--backup区域最下面的横线-->
+		<View android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:background="@color/darkgrey" />
 
 	</LinearLayout>
+	<!--backup区域结束-->
 
+
+
+	<!--recover区域开始-->
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="125dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:layout_marginTop="10dp"
+		android:weightSum="1">
+
+		<!--左右布局，依次是按钮、右侧文字开始-->
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="110dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginTop="10dp"
+			android:weightSum="1">
+
+
+
+			<!--上下布局，右侧文字开始-->
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="285dp"
+				android:layout_height="100dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="0dp"
+				android:weightSum="1"
+				android:layout_weight="0.14">
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_recover"
+					android:textSize="22sp"
+					android:textStyle="normal|bold" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="18sp"
+					android:text="@string/data_recover_description" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_bakup_description_dir"
+					android:textStyle="normal|italic"
+					android:textColor="@color/gray" />
+			</LinearLayout>
+			<!--上下布局，右侧文字结束-->
+
+			<Button android:id="@+id/data_recover"
+				android:layout_marginTop="10dp"
+				android:layout_width="49dp"
+				android:layout_height="49dp"
+				android:layout_marginLeft="10dp"
+				android:background="@drawable/recory_01" />
+
+
+		</LinearLayout>
+		<!--左右布局，依次是按钮、右侧文字结束-->
+
+		<!--recover区域最下面的横线-->
+		<View android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:background="@color/darkgrey" />
+
+	</LinearLayout>
+	<!--recover区域结束-->
+
+
+
+	<!--_mess_import区域开始-->
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="145dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:layout_marginTop="10dp"
+		android:weightSum="1">
+
+		<!--左右布局，依次是按钮、右侧文字开始-->
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginTop="10dp"
+			android:weightSum="1">
+
+			<!--上下布局，右侧文字开始-->
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="285dp"
+				android:layout_height="130dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="0dp"
+				android:weightSum="1"
+				android:layout_weight="0.14">
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_mess_import"
+					android:textSize="22sp"
+					android:textStyle="normal|bold" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="18sp"
+					android:text="@string/data_mess_import_description" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_mess_import_description_dir"
+					android:textStyle="normal|italic"
+					android:textColor="@color/gray" />
+
+			</LinearLayout>
+			<!--上下布局，右侧文字结束-->
+
+			<Button android:id="@+id/data_mess_import"
+				android:layout_marginTop="10dp"
+				android:layout_width="49dp"
+				android:layout_height="49dp"
+				android:layout_marginLeft="10dp"
+				android:background="@drawable/mess_import_01" />
+
+		</LinearLayout>
+		<!--左右布局，依次是按钮、右侧文字结束-->
+
+		<!--_mess_import区域最下面的横线-->
+		<View android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:background="@color/darkgrey" />
+
+	</LinearLayout>
+	<!--_mess_import区域结束-->
+
+<!--注释掉区域暂未开启使用-->
+<!--
 	<FrameLayout
-    android:layout_width="fill_parent"
-    android:layout_height="50dp" >
+		android:layout_width="fill_parent"
+		android:layout_height="50dp" >
 
-        <Button
-            android:id="@+id/back"
-            android:layout_gravity="left|center_vertical"
-	        android:layout_width="40dp"
-	        android:layout_height="40dp"
-		    android:layout_marginLeft="10dp"
-	        android:background="@drawable/home_01" />
-        
+		<Button
+			android:id="@+id/back"
+			android:layout_gravity="left|center_vertical"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_marginLeft="10dp"
+			android:background="@drawable/home_01" />
+			
+	</FrameLayout>
+-->
 
-    </FrameLayout>
+
+	<!--<TextView	android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="0dp"
+		android:weightSum="1"
+		android:text="@string/menu_warming_have_unencode_file"
+		android:textColor="@color/red"
+		android:textStyle="normal|bold" />-->
 
 </LinearLayout>
   

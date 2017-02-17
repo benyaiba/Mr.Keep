@@ -53,18 +53,19 @@ public class DataManagementActivity extends Activity {
 		PasswordDB = new PasswordDB(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_data_management);
-		
-		Button bn_back = (Button)findViewById(R.id.back);
-		bn_back.setOnClickListener(new OnClickListener(){
-			   public void  onClick(View v)     
-			   {  
-					   Intent mainIntent = new Intent(DataManagementActivity.this,MainActivity.class);
-					   startActivity(mainIntent);
-					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-					   setResult(RESULT_OK, mainIntent);  
-					   finish();  
-			   }  
-			  });
+
+		// 注释掉区域暂未开启使用
+//		Button bn_back = (Button)findViewById(R.id.back);
+//		bn_back.setOnClickListener(new OnClickListener(){
+//			   public void  onClick(View v)
+//			   {
+//					   Intent mainIntent = new Intent(DataManagementActivity.this,MainActivity.class);
+//					   startActivity(mainIntent);
+//					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+//					   setResult(RESULT_OK, mainIntent);
+//					   finish();
+//			   }
+//			  });
 		
 		
 		Button bn_data_bakup = (Button)findViewById(R.id.data_bakup);

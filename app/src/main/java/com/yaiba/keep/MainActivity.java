@@ -255,8 +255,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				title = this.getString(R.string.menu_about);//关于Keep
 				msg = this.getString(R.string.about_keep);
 				msg = msg + "\n\n";
-				msg = msg + "版本："+getAppVersion();
-				msg = msg + "\n\n\n";
+				msg = msg + "@"+getAppVersion();
 				showAboutDialog(title,msg);
 			break;
 			case MENU_SUPPORT:
@@ -300,7 +299,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		builder.setIcon(android.R.drawable.ic_dialog_info);
 		builder.setTitle(title);
 		builder.setMessage(msg);
-		builder.setPositiveButton("确认", null);
+		builder.setPositiveButton("确定", null);
 		builder.create().show();
 	}
 	

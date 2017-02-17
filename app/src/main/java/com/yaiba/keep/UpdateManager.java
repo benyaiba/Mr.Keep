@@ -49,6 +49,11 @@ import android.util.Log;
      private String FILE_DIR_NAME = "keep";
      private String savefolder = "/mnt/sdcard/keep/";
 
+         /////////////////////////////
+         //本class暂时不用，请勿调用//
+         /////////////////////////////
+
+
     public UpdateManager(Context context, UpdateCallback updateCallback) {
     	
     	boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);

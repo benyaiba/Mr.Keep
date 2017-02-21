@@ -82,17 +82,42 @@ public class AddRecordActivity extends Activity {
 			Toast.makeText(this, "[名称]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+		if (sitename.length() >30){
+			Toast.makeText(this, "[名称]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
 		if (username.equals("")){
 			Toast.makeText(this, "[登陆名]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+
+		if (username.length() >30){
+			Toast.makeText(this, "[登陆名]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
 		if (passwordvalue.equals("")){
 			Toast.makeText(this, "[密码]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+
+		if (passwordvalue.length() >30){
+			Toast.makeText(this, "[密码]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
 		if (remark.equals("")){
 			remark = "";
 		}
+
+		if (remark.length() >200){
+			Toast.makeText(this, "[备注]长度不能超过200个文字", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+
+
 		
 		try {
 			PasswordDB.insert(sitename, username, DES.encryptDES(passwordvalue), remark);

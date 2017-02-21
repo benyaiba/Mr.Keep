@@ -139,15 +139,20 @@ public class LoginActivity extends Activity {
 
 		
 		if (password.equals("")){
-			Toast.makeText(this, "暗号不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[密码]不能为空", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+		if (password.length() >30){
+			Toast.makeText(this, "[密码]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (password2.equals("")){
-			Toast.makeText(this, "暗号不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[密码]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (!password.equals(password2)){
-			Toast.makeText(this, "两组暗号不一致", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "两组[密码]不一致", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		

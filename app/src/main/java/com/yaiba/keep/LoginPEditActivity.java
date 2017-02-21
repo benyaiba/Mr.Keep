@@ -69,21 +69,29 @@ public class LoginPEditActivity extends Activity {
 
 		
 		if (oldPassword.equals("")){
-			Toast.makeText(this, "当前密码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[当前密码]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (password.equals("")){
-			Toast.makeText(this, "新密码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[新密码]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+
+		if (password.length() >30){
+			Toast.makeText(this, "[密码]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
 		if (password2.equals("")){
-			Toast.makeText(this, "新密码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[新密码]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (!password.equals(password2)){
-			Toast.makeText(this, "两组新密码不一致", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "两组[新密码]不一致", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+
+
 		
 
 		try {

@@ -19,18 +19,18 @@
 
 		   <EditText
 			   android:id="@+id/searchInput"
-			   android:layout_width="250dp"
+			   android:layout_width="230dp"
 			   android:layout_height="50dp"
 			   android:layout_marginLeft="10dp"
 			   android:hint="@string/record_list_search" />
 
 		   <Button
 			   android:id="@+id/go_add"
-			   android:layout_gravity="end"
-			   android:layout_width="40dp"
+			   android:layout_width="100dp"
 			   android:layout_height="40dp"
-			   android:layout_marginLeft="55dp"
-			   android:background="@drawable/add_01" />
+			   android:layout_marginLeft="5dp"
+			   android:text="添加记录"
+			   />
 	   </LinearLayout>
     
   <ListView android:id="@+id/recordslist"

@@ -68,9 +68,10 @@
 			<Button android:id="@+id/data_bakup"
 				android:layout_marginTop="10dp"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
-				android:background="@drawable/bakup_01" />
+				android:textSize="24sp"
+				android:text="备份"/>
 
 		</LinearLayout>
 		<!--左右布局，依次是按钮、右侧文字结束-->
@@ -137,9 +138,10 @@
 			<Button android:id="@+id/data_recover"
 				android:layout_marginTop="10dp"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
-				android:background="@drawable/recory_01" />
+				android:textSize="24sp"
+				android:text="恢复" />
 
 
 		</LinearLayout>
@@ -206,9 +208,10 @@
 			<Button android:id="@+id/data_mess_import"
 				android:layout_marginTop="10dp"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
-				android:background="@drawable/mess_import_01" />
+				android:textSize="24sp"
+				android:text="批量" />
 
 		</LinearLayout>
 		<!--左右布局，依次是按钮、右侧文字结束-->

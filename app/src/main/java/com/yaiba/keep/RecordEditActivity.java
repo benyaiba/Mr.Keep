@@ -80,9 +80,22 @@ public class RecordEditActivity extends Activity {
 		String passwordvalue = PasswordValue.getText().toString();
 		String remark = Remark.getText().toString();
 
-		if (sitename.equals("") || username.equals("") || passwordvalue.equals("")){
+//		if (sitename.equals("") || username.equals("") || passwordvalue.equals("")){
+//			return false;
+//		}
+		if (sitename.equals("")){
+			Toast.makeText(this, "[名称]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+		if (username.equals("")){
+			Toast.makeText(this, "[登陆名]不能为空", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (passwordvalue.equals("")){
+			Toast.makeText(this, "[密码]不能为空", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
 		try {
 			PasswordDB.update(RECORD_ID, sitename, username, DES.encryptDES(passwordvalue), remark);
 		} catch (Exception e) {

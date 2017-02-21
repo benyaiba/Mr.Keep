@@ -79,15 +79,15 @@ public class AddRecordActivity extends Activity {
 		String remark = Remark.getText().toString();
 		
 		if (sitename.equals("")){
-			Toast.makeText(this, "网站名不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[名称]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (username.equals("")){
-			Toast.makeText(this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[登陆名]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (passwordvalue.equals("")){
-			Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[密码]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (remark.equals("")){

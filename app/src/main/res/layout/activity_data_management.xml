@@ -13,7 +13,7 @@
 		android:layout_marginTop="10dp"
 		android:weightSum="1">
 
-		<!--左右布局，依次是按钮、右侧文字开始-->
+		<!--左右布局，依次是文字、右按钮开始-->
 		<LinearLayout android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="110dp"
@@ -24,14 +24,13 @@
 
 
 
-			<!--上下布局，右侧文字开始-->
+			<!--上下布局，左侧文字开始-->
 			<LinearLayout android:orientation="vertical"
-					android:layout_width="285dp"
+					android:layout_width="295dp"
 					android:layout_height="100dp"
-					android:layout_marginLeft="10dp"
+					android:layout_marginLeft="5dp"
 					android:layout_marginRight="0dp"
-					android:weightSum="1"
-				android:layout_weight="0.14">
+					android:weightSum="1">
 
 				<TextView	android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -61,17 +60,16 @@
 						android:checked="true"
 						android:layout_marginLeft="0dp"
 						android:paddingLeft="0dp"
-						android:paddingTop="0dp"
-						android:layout_weight="0.11" />
+						android:paddingTop="0dp" />
 
 				</LinearLayout>
 			<!--上下布局，右侧文字结束-->
 
 			<Button android:id="@+id/data_bakup"
 				android:layout_marginTop="10dp"
-				android:layout_width="49dp"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="10dp"
+				android:layout_marginLeft="0dp"
 				android:background="@drawable/bakup_01" />
 
 		</LinearLayout>
@@ -111,12 +109,11 @@
 
 			<!--上下布局，右侧文字开始-->
 			<LinearLayout android:orientation="vertical"
-				android:layout_width="285dp"
+				android:layout_width="295dp"
 				android:layout_height="100dp"
-				android:layout_marginLeft="10dp"
+				android:layout_marginLeft="5dp"
 				android:layout_marginRight="0dp"
-				android:weightSum="1"
-				android:layout_weight="0.14">
+				android:weightSum="1">
 
 				<TextView	android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -139,9 +136,9 @@
 
 			<Button android:id="@+id/data_recover"
 				android:layout_marginTop="10dp"
-				android:layout_width="49dp"
-				android:layout_height="49dp"
-				android:layout_marginLeft="10dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="0dp"
 				android:background="@drawable/recory_01" />
 
 
@@ -180,12 +177,11 @@
 
 			<!--上下布局，右侧文字开始-->
 			<LinearLayout android:orientation="vertical"
-				android:layout_width="285dp"
+				android:layout_width="295dp"
 				android:layout_height="130dp"
-				android:layout_marginLeft="10dp"
+				android:layout_marginLeft="5dp"
 				android:layout_marginRight="0dp"
-				android:weightSum="1"
-				android:layout_weight="0.14">
+				android:weightSum="1">
 
 				<TextView	android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -209,9 +205,9 @@
 
 			<Button android:id="@+id/data_mess_import"
 				android:layout_marginTop="10dp"
-				android:layout_width="49dp"
-				android:layout_height="49dp"
-				android:layout_marginLeft="10dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="0dp"
 				android:background="@drawable/mess_import_01" />
 
 		</LinearLayout>

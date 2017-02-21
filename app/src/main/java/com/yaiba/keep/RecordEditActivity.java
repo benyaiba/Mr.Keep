@@ -44,17 +44,17 @@ public class RecordEditActivity extends Activity {
 			   }  
 			  });
 		
-		Button bn_back = (Button)findViewById(R.id.back);
-		bn_back.setOnClickListener(new OnClickListener(){
-			   public void  onClick(View v)     
-			   {  
-					   Intent mainIntent = new Intent(RecordEditActivity.this,MainActivity.class);
-					   startActivity(mainIntent);
-					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-					   setResult(RESULT_OK, mainIntent);  
-					   finish();  
-			   }  
-			  });
+//		Button bn_back = (Button)findViewById(R.id.back);
+//		bn_back.setOnClickListener(new OnClickListener(){
+//			   public void  onClick(View v)
+//			   {
+//					   Intent mainIntent = new Intent(RecordEditActivity.this,MainActivity.class);
+//					   startActivity(mainIntent);
+//					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+//					   setResult(RESULT_OK, mainIntent);
+//					   finish();
+//			   }
+//			  });
 	
 	}
 	

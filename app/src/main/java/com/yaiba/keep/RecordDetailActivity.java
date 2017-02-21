@@ -29,17 +29,17 @@ public class RecordDetailActivity extends Activity {
 		setContentView(R.layout.activity_record_detail);
 		RECORD_ID = this.getIntent().getIntExtra("INT", RECORD_ID);
 		setUpViews();
-		Button bn_back = (Button)findViewById(R.id.back);
-		bn_back.setOnClickListener(new OnClickListener(){
-			   public void  onClick(View v)     
-			   {  
-					   Intent mainIntent = new Intent(RecordDetailActivity.this,MainActivity.class);
-					   startActivity(mainIntent);
-					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-					   setResult(RESULT_OK, mainIntent);  
-					   finish();  
-			   }  
-			  });
+//		Button bn_back = (Button)findViewById(R.id.back);
+//		bn_back.setOnClickListener(new OnClickListener(){
+//			   public void  onClick(View v)
+//			   {
+//					   Intent mainIntent = new Intent(RecordDetailActivity.this,MainActivity.class);
+//					   startActivity(mainIntent);
+//					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+//					   setResult(RESULT_OK, mainIntent);
+//					   finish();
+//			   }
+//			  });
 	
 	}
 	

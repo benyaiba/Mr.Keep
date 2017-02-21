@@ -4,75 +4,65 @@
                                         android:layout_width="fill_parent" 
                                         android:layout_height="fill_parent">
 
-    <FrameLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="50dp">
+    <Button
+        android:id="@+id/add"
+        android:layout_gravity="right|center_vertical"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/save_01" />
 
-        <Button
-            android:id="@+id/back"
-            android:layout_gravity="left|center_vertical"
-	        android:layout_width="40dp"
-	        android:layout_height="40dp"
-		    android:layout_marginLeft="10dp"
-	        android:background="@drawable/list_01" />
-        
-        <Button
-            android:id="@+id/add"
-            android:layout_gravity="right|center_vertical"
-	        android:layout_width="40dp"
-	        android:layout_height="40dp"
-		    android:layout_marginRight="10dp"
-	        android:background="@drawable/save_01" />
-
-    </FrameLayout>
-    
-
-     <LinearLayout android:orientation="vertical" 
+     <LinearLayout android:orientation="vertical"
                   android:layout_width="fill_parent" 
                   android:layout_height="fill_parent"
-                  android:layout_margin="20dp"> 
-    <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="12sp" 
-          android:text="@string/site_name" />
-      <EditText
+                  android:layout_margin="10dp">
+        <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="12sp"
+              android:text="@string/site_name" />
+
+        <EditText
           android:id="@+id/site_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:ems="10" />
-      
-      <TextView
+
+        <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="5dp"
-          android:textSize="12sp" 
+          android:textSize="12sp"
           android:text="@string/user_name" />
-      <EditText
+
+        <EditText
           android:id="@+id/user_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:ems="10" />
-      
-      <TextView
+
+        <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="5dp"
           android:textSize="12sp"
           android:text="@string/word_value" />
-      <EditText
+
+        <EditText
           android:id="@+id/word_value"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:ems="10" />
-      
-      <TextView
+
+        <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="5dp"
-          android:textSize="12sp" 
+          android:textSize="12sp"
           android:text="@string/remark" />
-      <EditText
+         
+        <EditText
           android:id="@+id/remark"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

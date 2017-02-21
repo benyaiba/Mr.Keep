@@ -4,39 +4,35 @@
                                         android:layout_width="fill_parent" 
                                         android:layout_height="fill_parent">  
 
-  
-  
-  
-   <FrameLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="50dp" >
        <!-- 为了不让edittext组件获得焦点 -->
 	   <LinearLayout 
 			android:focusable="true" 
 			android:focusableInTouchMode="true" 
 			android:layout_width="0px" 
-			android:layout_height="0px"/> 
+			android:layout_height="0px"/>
 
-       <EditText
-           android:id="@+id/searchInput"
-	       android:layout_width="250dp"
-	       android:layout_height="50dp"
-		   android:layout_marginLeft="10dp"
-		   android:hint="@string/record_list_search"
-            />
-       
-        <Button
-           android:id="@+id/go_add"
-           android:layout_gravity="right|center_vertical"
-	       android:layout_width="40dp"
-	       android:layout_height="40dp"
-		   android:layout_marginRight="10dp"
-	       android:background="@drawable/add_01"
-            />
+	   <LinearLayout
+		   android:orientation="horizontal"
+		   android:layout_width="fill_parent"
+		   android:layout_height="50dp"
+		   android:layout_margin="10dp">
 
-    </FrameLayout>
+		   <EditText
+			   android:id="@+id/searchInput"
+			   android:layout_width="250dp"
+			   android:layout_height="50dp"
+			   android:layout_marginLeft="10dp"
+			   android:hint="@string/record_list_search" />
+
+		   <Button
+			   android:id="@+id/go_add"
+			   android:layout_gravity="end"
+			   android:layout_width="40dp"
+			   android:layout_height="40dp"
+			   android:layout_marginLeft="55dp"
+			   android:background="@drawable/add_01" />
+	   </LinearLayout>
     
-
   <ListView android:id="@+id/recordslist"
 			android:layout_width="wrap_content"   
             android:layout_height="wrap_content"

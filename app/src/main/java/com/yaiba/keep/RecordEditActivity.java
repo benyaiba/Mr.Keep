@@ -75,9 +75,9 @@ public class RecordEditActivity extends Activity {
 	@SuppressWarnings("deprecation")
 	public Boolean update(){
 	
-		String sitename = SiteName.getText().toString();
-		String username = UserName.getText().toString();
-		String passwordvalue = PasswordValue.getText().toString();
+		String sitename = SiteName.getText().toString().replace("\n","");;
+		String username = UserName.getText().toString().replace("\n","");;
+		String passwordvalue = PasswordValue.getText().toString().replace("\n","");;
 		String remark = Remark.getText().toString();
 
 //		if (sitename.equals("") || username.equals("") || passwordvalue.equals("")){

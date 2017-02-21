@@ -83,72 +83,74 @@ public class DataManagementActivity extends Activity {
 			   
 			   {  
 				   
-				 //弹出提示，确认后恢复
-				   AlertDialog.Builder builder= new AlertDialog.Builder(DataManagementActivity.this);
-				   builder.setIcon(android.R.drawable.ic_dialog_info);
-				   builder.setTitle("选择要恢复的文件,恢复后原有记录将被清空");
+		   //弹出提示，确认后恢复
+		   AlertDialog.Builder builder= new AlertDialog.Builder(DataManagementActivity.this);
+		   builder.setIcon(android.R.drawable.ic_dialog_info);
+		   builder.setTitle("选择要恢复的文件,恢复后原有记录将被清空");
 
-				   List<String> bakupFileList = new ArrayList<String>();
+		   List<String> bakupFileList = new ArrayList<String>();
+		   String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
+		   File[] files = new File(keepPath).listFiles();
 
-				   String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
+		   //判断文件夹不存在或文件夹中没有文件时
+		   if(files != null){
+			   //存在时
 
-				   File[] files = new File(keepPath).listFiles();
-
-				   for (int i = 0; i < files.length; i++) {
-					   File file = files[i];
-					   if (checkIsXMLFile(file.getPath())) {
-						   //判断文件名中是否不包含20170216020803!!!!!.xml 这种文件，这种文件是未加密的文件，禁止在列表中显示
-						   if(file.getName().indexOf("!")==-1){
-							   bakupFileList.add(file.getName());
-						   }
+			   for (int i = 0; i < files.length; i++) {
+				   File file = files[i];
+				   if (checkIsXMLFile(file.getPath())) {
+					   //判断文件名中是否不包含20170216020803!!!!!.xml 这种文件，这种文件是未加密的文件，禁止在列表中显示
+					   if(file.getName().indexOf("!")==-1){
+						   bakupFileList.add(file.getName());
 					   }
-					  }
+				   }
+			   }
 
-				   if(bakupFileList.size()<=0){
+			   if(bakupFileList.size()<=0){
 
-					   builder.setMessage("没有找到可用来恢复的备份文件");
-					   builder.setNegativeButton("取消", null);
+				   builder.setMessage("没有找到可用来恢复的备份文件");
+				   builder.setNegativeButton("取消", null);
+				   builder.create().show();
 
-				   } else {
-					   Collections.reverse(bakupFileList);
+			   } else {
+				   Collections.reverse(bakupFileList);
 
-					   bakFileArray = bakupFileList.toArray(new String[bakupFileList.size()]);
-
-
-					   builder.setIcon(android.R.drawable.ic_dialog_alert);
-					   builder.setSingleChoiceItems(bakFileArray, 0, new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int index) {
-		                    	selectBakupFileIndex = index;
-		                    	//Toast.makeText(DataManagementActivity.this, "selectBakupFileIndex:"+selectBakupFileIndex , Toast.LENGTH_SHORT).show();
-		                    }
-		                });
-					   builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int whichButton) {
-		                    	dataRecover(bakFileArray[selectBakupFileIndex]);
-		                    	//Toast.makeText(DataManagementActivity.this, "selectBakupFileIndex:"+selectBakupFileIndex , Toast.LENGTH_SHORT).show();
-		                    }
-		                });
-					   builder.setNegativeButton("取消", null);
-					   builder.create().show();
+				   bakFileArray = bakupFileList.toArray(new String[bakupFileList.size()]);
 
 
-
+				   builder.setIcon(android.R.drawable.ic_dialog_alert);
+				   builder.setSingleChoiceItems(bakFileArray, 0, new DialogInterface.OnClickListener() {
+					   public void onClick(DialogInterface dialog, int index) {
+						   selectBakupFileIndex = index;
+						   //Toast.makeText(DataManagementActivity.this, "selectBakupFileIndex:"+selectBakupFileIndex , Toast.LENGTH_SHORT).show();
+					   }
+				   });
+				   builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					   public void onClick(DialogInterface dialog, int whichButton) {
+						   dataRecover(bakFileArray[selectBakupFileIndex]);
+						   //Toast.makeText(DataManagementActivity.this, "selectBakupFileIndex:"+selectBakupFileIndex , Toast.LENGTH_SHORT).show();
+					   }
+				   });
+				   builder.setNegativeButton("取消", null);
+				   builder.create().show();
 
 //					   builder.setMessage("程序将读取SD卡中的备份文件"+fileName+"，恢复后原有记录将被清空。确定要执行吗？");
-//						builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  
-//		                    public void onClick(DialogInterface dialog, int whichButton) {  
+//						builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//		                    public void onClick(DialogInterface dialog, int whichButton) {
 //		                    	dataRecover();
-//		                    }  
+//		                    }
 //		                });
 //						builder.setNegativeButton("取消", null);
 //						builder.create().show();
-
-
-
-				   }
-
 			   }
-			  });
+		   } else {
+			   //不存在时
+			   builder.setMessage("没有找到可用来恢复的备份文件");
+			   builder.setNegativeButton("取消", null);
+			   builder.create().show();
+		   }
+	   }
+	  });
 		
 		Button bn_data_mess_import = (Button)findViewById(R.id.data_mess_import);
 		bn_data_mess_import.setOnClickListener(new OnClickListener(){
@@ -170,7 +172,6 @@ public class DataManagementActivity extends Activity {
 				   
 			   }  
 			  });
-	
 	}
 	
 	@Override

@@ -18,11 +18,11 @@
     <string name="reg">注册</string>
     
     <string name="what_updated">
-        0.1.6.2\n完善注册和登陆画面的用户体验
+        0.1.7.0\n未加密的备份文件存留提示
+        \n\n0.1.6.9\n#7 #8 #10 #11 #12 #13 #14 问题修正
+        \n\n0.1.6.2\n完善注册和登陆画面的用户体验\n调整“备份与恢复”页面布局和使用流程\release时包名动态取得
         \n\n0.1.6.1\n调整“备份与恢复”页面布局和使用流程
-        \n\n0.1.6.0\n备份时可选加密/不加密两种导出形式，用于将密码列表保存在本地电脑中
-        \n\n0.1.5.2\n1.开发环境升级到AS2.2.3，工程目录变更\n2.增加新的数字签名
-        \n\n0.1.5.0\n增加新版本检查功能</string>
+    </string>
     <string name="partners">\@石头大风吹</string>
     <string name="about_keep">
         Keep，
@@ -91,7 +91,7 @@
 	<string name="menu_support">技术支持</string>
 	<string name="menu_about">关于Keep</string>
 
-    <string name="menu_warming_have_unencode_file">警告：\n检测到目录中包含未加密的账户文件，请及时清除！</string>
+    <string name="menu_warming_have_unencode_file">警告：检测到目录中包含未加密的备份文件\n为了安全起见请备份后删除</string>
 
     <string name="version_unknown">未知版本</string>
 

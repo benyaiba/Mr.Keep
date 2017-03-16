@@ -45,6 +45,8 @@ public class DataManagementActivity extends Activity {
 	private String fileNameSuff = ".xml";
 	private String fileNameMass = "keepres_mass.xml";
 
+	private TextView warmingHaveUnencodeFile;
+
 	private CheckBox encode;
 	
 	@Override
@@ -52,7 +54,25 @@ public class DataManagementActivity extends Activity {
 		
 		PasswordDB = new PasswordDB(this);
 		super.onCreate(savedInstanceState);
+
+
+		//判断文件名中是否包含20170216020803!!!!!.xml 这种文件，如果目录中包含这种文件，将在画面最下方以红色文字提示。
+		List<String> bakupFileList = new ArrayList<String>();
+		String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
+		File[] files = new File(keepPath).listFiles();
+
 		setContentView(R.layout.activity_data_management);
+		if(files != null){
+			for (int i = 0; i < files.length; i++) {
+				File file = files[i];
+				if(file.getName().indexOf("!!!!!") != -1 || file.getName().indexOf("keepres_mass")!= -1){
+					warmingHaveUnencodeFile = (TextView)findViewById(R.id.warmingHaveUnencodeFile);
+					warmingHaveUnencodeFile.setText(R.string.menu_warming_have_unencode_file);
+					warmingHaveUnencodeFile.setTextColor(getResources().getColor(R.color.royalblue));
+					break;
+				}
+			}
+		}
 
 		// 注释掉区域暂未开启使用
 //		Button bn_back = (Button)findViewById(R.id.back);
@@ -66,6 +86,9 @@ public class DataManagementActivity extends Activity {
 //					   finish();
 //			   }
 //			  });
+
+
+
 		
 		
 		Button bn_data_bakup = (Button)findViewById(R.id.data_bakup);

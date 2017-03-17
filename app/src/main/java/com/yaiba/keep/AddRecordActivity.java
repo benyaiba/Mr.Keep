@@ -22,9 +22,15 @@ public class AddRecordActivity extends Activity {
 	private EditText Remark;
 	private EditText PasswordLength;
 
+	private EditText PasswordContain;
+	private EditText PasswordNotContain;
+	private EditText PasswordIndex;
+
+
 	private CheckBox CheckboxUseNum;
 	private CheckBox CheckboxUseWordLowcase;
 	private CheckBox CheckboxUseWordUpcase;
+	private CheckBox CheckboxUseSymbol;
 
 	private LinearLayout passwordOption;
 
@@ -92,6 +98,7 @@ public class AddRecordActivity extends Activity {
 				Boolean isNumChecked = false;
 				Boolean isUseWordLowcaseChecked = false;
 				Boolean isUseWordUpcaseChecked = false;
+				Boolean isUseSymbolChecked = false;
 
 				CheckboxUseNum=(CheckBox)findViewById(R.id.checkbox_use_num);
 				if(CheckboxUseNum.isChecked()){
@@ -108,6 +115,11 @@ public class AddRecordActivity extends Activity {
 					isUseWordUpcaseChecked = true;
 				}
 
+				CheckboxUseSymbol=(CheckBox)findViewById(R.id.checkbox_use_symbol);
+				if(CheckboxUseSymbol.isChecked()){
+					isUseSymbolChecked = true;
+				}
+
 				PasswordLength=(EditText)findViewById(R.id.txt_password_length);
 
 				if(PasswordLength.getText().toString().isEmpty() || Integer.parseInt(PasswordLength.getText().toString()) <=4){
@@ -118,8 +130,26 @@ public class AddRecordActivity extends Activity {
 					PasswordLengthString = Integer.parseInt(PasswordLength.getText().toString());
 				}
 
+
+				String PasswordContainStr = ((EditText)findViewById(R.id.txt_contain)).getText().toString();
+				String PasswordNotContainStr = ((EditText)findViewById(R.id.txt_not_contain)).getText().toString();
+				String PasswordIndexStr = ((EditText)findViewById(R.id.txt_index)).getText().toString();
+
+				//PasswordContain=(EditText)findViewById(R.id.txt_contain);
+				//PasswordNotContain=(EditText)findViewById(R.id.txt_not_contain);
+				//PasswordIndex=(EditText)findViewById(R.id.txt_index);
+
+
 				PassWordCreate createNewPassword = new PassWordCreate();
-				setPassword = createNewPassword.getRandomString(PasswordLengthString, isNumChecked, isUseWordLowcaseChecked, isUseWordUpcaseChecked);
+				setPassword = createNewPassword.getRandomString(
+						PasswordLengthString,
+						isNumChecked,
+						isUseWordLowcaseChecked,
+						isUseWordUpcaseChecked,
+						isUseSymbolChecked,
+						PasswordContainStr,
+						PasswordNotContainStr,
+						PasswordIndexStr);
 
 				PasswordValue = (EditText) findViewById(R.id.word_value);
 				PasswordValue.setText(setPassword);

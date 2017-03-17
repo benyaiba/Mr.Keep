@@ -7,16 +7,28 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class AddRecordActivity extends Activity {
 	
 	private PasswordDB PasswordDB;
+
 	private EditText SiteName;
 	private EditText UserName;
 	private EditText PasswordValue;
 	private EditText Remark;
+	private EditText PasswordLength;
+
+	private CheckBox CheckboxUseNum;
+	private CheckBox CheckboxUseWordLowcase;
+	private CheckBox CheckboxUseWordUpcase;
+
+	private LinearLayout passwordOption;
+
+	private boolean isButton = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +62,72 @@ public class AddRecordActivity extends Activity {
 //					   finish();
 //			   }
 //			  });
-		
+
+
+
+		//设置密码配置区域展开和隐藏
+		Button bn_random_password = (Button)findViewById(R.id.random_password);
+		passwordOption = (LinearLayout) findViewById(R.id.password_option);
+		bn_random_password.setOnClickListener(new OnClickListener(){
+			public void  onClick(View v)
+			{
+				if(isButton){
+					passwordOption.setVisibility(View.VISIBLE);
+					isButton = false;
+				}else {
+					passwordOption.setVisibility(View.GONE);
+					isButton = true;
+				}
+			}
+		});
+
+
+		//按照选定的值生成随机密码，并填写到密码栏中
+		Button bn_create_random_password = (Button)findViewById(R.id.create_random_password);
+		bn_create_random_password.setOnClickListener(new OnClickListener(){
+			public void  onClick(View v)
+			{
+				String setPassword = "";
+				int PasswordLengthString = 8;
+				Boolean isNumChecked = false;
+				Boolean isUseWordLowcaseChecked = false;
+				Boolean isUseWordUpcaseChecked = false;
+
+				CheckboxUseNum=(CheckBox)findViewById(R.id.checkbox_use_num);
+				if(CheckboxUseNum.isChecked()){
+					isNumChecked = true;
+				}
+
+				CheckboxUseWordLowcase=(CheckBox)findViewById(R.id.checkbox_use_word_lowcase);
+				if(CheckboxUseWordLowcase.isChecked()){
+					isUseWordLowcaseChecked =  true;
+				}
+
+				CheckboxUseWordUpcase=(CheckBox)findViewById(R.id.checkbox_use_word_upcase);
+				if(CheckboxUseWordUpcase.isChecked()){
+					isUseWordUpcaseChecked = true;
+				}
+
+				PasswordLength=(EditText)findViewById(R.id.txt_password_length);
+
+				if(PasswordLength.getText().toString().isEmpty() || Integer.parseInt(PasswordLength.getText().toString()) <=4){
+					PasswordLengthString = 4;
+				} else if(Integer.parseInt(PasswordLength.getText().toString())>16) {
+					PasswordLengthString = 16;
+				} else {
+					PasswordLengthString = Integer.parseInt(PasswordLength.getText().toString());
+				}
+
+				PassWordCreate createNewPassword = new PassWordCreate();
+				setPassword = createNewPassword.getRandomString(PasswordLengthString, isNumChecked, isUseWordLowcaseChecked, isUseWordUpcaseChecked);
+
+				PasswordValue = (EditText) findViewById(R.id.word_value);
+				PasswordValue.setText(setPassword);
+
+			}
+		});
+
+
 	}
 	
 	@Override

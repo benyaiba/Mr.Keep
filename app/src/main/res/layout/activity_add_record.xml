@@ -49,11 +49,120 @@
                 android:textSize="12sp"
                 android:text="@string/word_value" />
 
-            <EditText
-                android:id="@+id/word_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10" />
+             <!--水平布局，密码文本框，生成随机密码按钮-->
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/word_value"
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.17"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:text=""
+                    android:textSize="24sp" />
+
+                <Button
+                     android:id="@+id/random_password"
+                     android:layout_gravity="right|center_vertical"
+                     android:layout_width="70dp"
+                     android:layout_height="wrap_content"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginTop="2dp"
+                     android:textSize="10dp"
+                     android:text="帮朕生成随机密码" />
+
+            </LinearLayout>
+
+
+             <!--密码扩展部分，上下布局-->
+             <LinearLayout android:id="@+id/password_option"
+                 android:orientation="vertical"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:background="@color/khaki"
+                 android:visibility="gone"
+                 android:weightSum="1">
+
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:textStyle="normal|italic"
+                     android:text="密码选项" />
+
+                 <CheckBox
+                     android:id="@+id/checkbox_use_num"
+                     android:layout_width="180dp"
+                     android:layout_height="wrap_content"
+                     android:textStyle="normal|italic"
+                     android:checked="true"
+                     android:text="1-9"  />
+
+                 <CheckBox
+                     android:id="@+id/checkbox_use_word_lowcase"
+                     android:layout_width="180dp"
+                     android:layout_height="wrap_content"
+                     android:textStyle="normal|italic"
+                     android:checked="true"
+                     android:text="a-z"  />
+
+                 <CheckBox
+                     android:id="@+id/checkbox_use_word_upcase"
+                     android:layout_width="180dp"
+                     android:layout_height="wrap_content"
+                     android:textStyle="normal|italic"
+                     android:text="A-Z"  />
+
+
+                 <!--生成密码扩展中的密码长度设置，左右布局-->
+                 <LinearLayout android:orientation="horizontal"
+                     android:layout_width="fill_parent"
+                     android:layout_height="fill_parent"
+                     android:background="@color/khaki"
+                     android:weightSum="1">
+
+                     <TextView
+                         android:layout_width="70dp"
+                         android:layout_height="wrap_content"
+                         android:textStyle="normal|italic"
+                         android:text="密码长度" />
+
+                     <EditText
+                         android:id="@+id/txt_password_length"
+                         android:layout_width="250dp"
+                         android:layout_height="wrap_content"
+                         android:text="8"
+                         android:digits="1234567890"
+                         android:inputType="number"
+                         android:maxLength="5"
+                         android:ems="10" />
+
+                 </LinearLayout>
+
+
+
+                 <Button
+                     android:id="@+id/create_random_password"
+                     android:layout_gravity="right|center_vertical"
+                     android:layout_width="70dp"
+                     android:layout_height="wrap_content"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginTop="2dp"
+                     android:textSize="14dp"
+                     android:text="生成" />
+
+             </LinearLayout>
+
+
+
+
+
+
+
+
 
             <TextView
                 android:layout_width="match_parent"

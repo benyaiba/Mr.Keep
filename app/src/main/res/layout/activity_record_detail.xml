@@ -52,10 +52,11 @@
                 android:id="@+id/word_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:enabled="false"
                 android:focusable="false"
                 android:inputType=""
+                android:fontFamily="monospace"
                 android:paddingBottom="10dp" />
 
             <TextView

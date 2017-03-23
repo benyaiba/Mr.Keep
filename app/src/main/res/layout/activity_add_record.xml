@@ -27,6 +27,7 @@
                 android:id="@+id/site_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="30"
                 android:ems="10" />
 
             <TextView
@@ -40,6 +41,8 @@
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textVisiblePassword"
+                android:maxLength="30"
                 android:ems="10" />
 
             <TextView
@@ -62,7 +65,9 @@
                     android:layout_weight="1.17"
                     android:ems="10"
                     android:fontFamily="monospace"
+                    android:inputType="textVisiblePassword"
                     android:text=""
+                    android:maxLength="50"
                     android:textSize="24sp" />
 
                 <Button
@@ -78,7 +83,7 @@
             </LinearLayout>
 
 
-             <!--密码扩展部分，上下布局-->
+             <!--密码扩展部分，上下布局 visible  invisible/gone-->
              <LinearLayout android:id="@+id/password_option"
                  android:orientation="vertical"
                  android:layout_width="fill_parent"
@@ -180,6 +185,7 @@
                          android:layout_width="200dp"
                          android:layout_height="wrap_content"
                          android:text=""
+                         android:inputType="textVisiblePassword"
                          android:maxLength="16"
                          android:ems="10" />
                  </LinearLayout>
@@ -201,6 +207,7 @@
                          android:layout_width="200dp"
                          android:layout_height="wrap_content"
                          android:text=""
+                         android:inputType="textVisiblePassword"
                          android:maxLength="16"
                          android:ems="10" />
                  </LinearLayout>
@@ -222,6 +229,7 @@
                          android:layout_width="200dp"
                          android:layout_height="wrap_content"
                          android:text=""
+                         android:inputType="textVisiblePassword"
                          android:maxLength="16"
                          android:ems="10" />
                  </LinearLayout>
@@ -256,6 +264,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
+                android:maxLength="500"
                 android:ems="10" />
 
              <Button

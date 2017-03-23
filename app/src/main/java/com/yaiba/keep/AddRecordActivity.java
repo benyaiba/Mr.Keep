@@ -22,11 +22,6 @@ public class AddRecordActivity extends Activity {
 	private EditText Remark;
 	private EditText PasswordLength;
 
-	private EditText PasswordContain;
-	private EditText PasswordNotContain;
-	private EditText PasswordIndex;
-
-
 	private CheckBox CheckboxUseNum;
 	private CheckBox CheckboxUseWordLowcase;
 	private CheckBox CheckboxUseWordUpcase;

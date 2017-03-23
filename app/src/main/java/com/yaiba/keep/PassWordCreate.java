@@ -71,18 +71,22 @@ public class PassWordCreate {
         }
 
         return CreatePassword(len,base);
-
     }
 
     public String CreatePassword(int len, String base){
 
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < len; i++) {
-            int number = random.nextInt(base.length());
-            sb.append(base.charAt(number));
+        if(!base.isEmpty()){
+            for (int i = 0; i < len; i++) {
+                int number = random.nextInt(base.length());
+                sb.append(base.charAt(number));
+            }
+            return sb.toString();
+        } else {
+            return "";
         }
-        return sb.toString();
+
 
     }
 

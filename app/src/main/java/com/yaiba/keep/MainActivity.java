@@ -34,6 +34,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.yaiba.keep.data.ListViewData;
+
 import com.yaiba.keep.PasswordDB;
 import com.yaiba.keep.UpdateTask;
 
@@ -66,10 +68,14 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_list);
 		setUpViews("all",null);
+
+		//返回前设置前次的位置值
+		setRecordListPosition();
+
 		Button bn_go_add = (Button)findViewById(R.id.go_add);
 		bn_go_add.setOnClickListener(new OnClickListener(){
 			   public void  onClick(View v)     
-			   {  
+			   {
 				   Intent mainIntent = new Intent(MainActivity.this,AddRecordActivity.class);
 				   startActivity(mainIntent);
 				   setResult(RESULT_OK, mainIntent);  
@@ -341,6 +347,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	}
 	 
 	public void go_update(){
+		//保存当前位置
+		saveListViewPositionAndTop();
+		//画面迁移到edit画面
 		 Intent mainIntent = new Intent(MainActivity.this,RecordEditActivity.class);
 		 mainIntent.putExtra("INT", RECORD_ID);
 		 startActivity(mainIntent);
@@ -371,7 +380,10 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		 Intent mainIntent = new Intent(MainActivity.this,RecordDetailActivity.class);
+		//保存当前一览位置
+		saveListViewPositionAndTop();
+		//迁移到详细页面
+		Intent mainIntent = new Intent(MainActivity.this,RecordDetailActivity.class);
 		 mCursor.moveToPosition(position);
 		 RECORD_ID = mCursor.getInt(0);
 		 mainIntent.putExtra("INT", RECORD_ID);
@@ -379,6 +391,23 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		 setResult(RESULT_OK, mainIntent);  
 		 finish(); 
 	}
+
+	/**
+	 * 保存当前页签listView的第一个可见的位置和top
+	 */
+	private void saveListViewPositionAndTop() {
+
+		final ListViewData app = (ListViewData)getApplication();
+
+		app.setFirstVisiblePosition(RecordList.getFirstVisiblePosition());
+		View item = RecordList.getChildAt(0);
+		app.setFirstVisiblePositionTop((item == null) ? 0 : item.getTop());
+
+		Toast.makeText(this, "a="+RecordList.getFirstVisiblePosition()+"||b="+((item == null) ? 0 : item.getTop()), Toast.LENGTH_SHORT).show();
+	}
+
+
+
 	 
 	public class RecordListAdapter extends BaseAdapter{
 		private Context mContext;
@@ -498,6 +527,12 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
         }
     };
+
+	//返回前设置前次的位置值
+	public void setRecordListPosition(){
+		ListViewData app = (ListViewData)getApplication();
+		RecordList.setSelectionFromTop(app.getFirstVisiblePosition(), app.getFirstVisiblePositionTop());
+	}
 	
 		
 }

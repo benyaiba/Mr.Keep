@@ -48,10 +48,10 @@ public class RecordDetailActivity extends Activity {
 	{
 		if(keyCode == KeyEvent.KEYCODE_BACK){
 			Intent mainIntent = new Intent(RecordDetailActivity.this,MainActivity.class);
-			   startActivity(mainIntent);
-			   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-			   setResult(RESULT_OK, mainIntent);  
-			   finish(); 
+			startActivity(mainIntent);
+			overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+			setResult(RESULT_OK, mainIntent);
+			finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

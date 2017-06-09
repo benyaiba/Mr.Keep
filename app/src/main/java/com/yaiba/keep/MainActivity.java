@@ -402,8 +402,6 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		app.setFirstVisiblePosition(RecordList.getFirstVisiblePosition());
 		View item = RecordList.getChildAt(0);
 		app.setFirstVisiblePositionTop((item == null) ? 0 : item.getTop());
-
-		Toast.makeText(this, "a="+RecordList.getFirstVisiblePosition()+"||b="+((item == null) ? 0 : item.getTop()), Toast.LENGTH_SHORT).show();
 	}
 
 

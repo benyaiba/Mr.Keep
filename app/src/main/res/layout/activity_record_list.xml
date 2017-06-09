@@ -32,8 +32,12 @@
 			   android:text="添加记录"
 			   />
 	   </LinearLayout>
-    
-  <ListView android:id="@+id/recordslist"
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+
+	<ListView android:id="@+id/recordslist"
 			android:layout_width="wrap_content"   
             android:layout_height="wrap_content"
 			android:textSize="20sp" 
@@ -41,7 +45,25 @@
 			android:paddingLeft="10dp"
 	        android:paddingBottom="10dp" />
 
-  </LinearLayout>
+	<TextView
+		android:id="@+id/float_letter"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:layout_gravity="center"
+		android:background="#F88701"
+		android:gravity="center"
+		android:textSize="40sp"
+		android:visibility="gone" />
+
+	<com.yaiba.keep.SlideBar
+		android:id="@+id/slideBar"
+		android:layout_width="30dp"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end|bottom" />
+
+	</FrameLayout>
+
+</LinearLayout>
   
 <!-- yaiba.20140513.下一版可参考.http://www.iteye.com/topic/540423 -->
 <!-- yaiba.20140513.下一版可参考.http://www.cnblogs.com/allin/archive/2010/05/11/1732200.html -->

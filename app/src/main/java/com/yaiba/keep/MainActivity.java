@@ -16,6 +16,7 @@ import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnCreateContextMenuListener; 
@@ -35,9 +36,17 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.yaiba.keep.data.ListViewData;
+import com.yaiba.keep.SlideBar;
 
 import com.yaiba.keep.PasswordDB;
 import com.yaiba.keep.UpdateTask;
+
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 
 public class MainActivity extends Activity implements  AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
@@ -56,12 +65,16 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	private EditText PasswordValue;
 	private EditText Remark;
 	private EditText SearchInput;
+	private TextView FloatLetter;
 	private ListView RecordList;
+	private SlideBar mSlideBar;
 	 
 	private int RECORD_ID = 0;
 	private UpdateManager updateMan;
 	private UpdateTask updateTask;
 	private ProgressDialog updateProgressDialog;
+
+	private  ArrayList<HashMap<String, Object>> listItemLike;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +95,56 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				   finish();  
 			   }  
 			  });
-		
-		
+
+		mSlideBar.setOnTouchLetterChangeListenner(new SlideBar.OnTouchLetterChangeListenner() {
+
+					@Override
+					public void onTouchLetterChange(MotionEvent event, String s) {
+
+						FloatLetter.setText(s);
+						switch (event.getAction()) {
+							case MotionEvent.ACTION_DOWN:
+							case MotionEvent.ACTION_MOVE:
+								FloatLetter.setVisibility(View.VISIBLE);
+								break;
+
+							case MotionEvent.ACTION_UP:
+							default:
+								FloatLetter.postDelayed(new Runnable() {
+
+									@Override
+									public void run() {
+										FloatLetter.setVisibility(View.GONE);
+									}
+								}, 100);
+								break;
+						}
+						int position  = 0;//这个array就是传给自定义Adapter的
+
+						for(int i=0;i<listItemLike.size();i++) {
+							String siteNamePinYinOne = getPingYin(listItemLike.get(i).get("site_name").toString()).substring(0,1);
+							//-----------------------------
+							//Toast.makeText(MainActivity.this, listItemLike.get(i).get("site_name").toString(), Toast.LENGTH_SHORT).show();
+//							System.out.println("=>"+i);
+//							System.out.println("listItemLike.get("+i+").get(site_name).toString()=>"+listItemLike.get(i).get("site_name").toString());
+//							System.out.println("to pinyin=>"+getPingYin(listItemLike.get(i).get("site_name").toString()));
+//							System.out.println("substring(1)=>"+siteNamePinYinOne);
+							//------------------------------
+							if(siteNamePinYinOne.toLowerCase().endsWith(s.toLowerCase())){
+//								System.out.println("进入if=>");
+//								System.out.println("siteNamePinYinOne.toLowerCase()=>"+siteNamePinYinOne.toLowerCase());
+//								System.out.println("s.toLowerCase()=>"+s.toLowerCase());
+//								System.out.println("结束if=>");
+								position = i+1;
+								break;
+							}
+						}
+
+						RecordList.setSelection(position);//调用ListView的setSelection()方法就可实现了
+					}
+				});
+
+
 		SearchInput = (EditText)findViewById(R.id.searchInput);
 		SearchInput.clearFocus();
 		SearchInput.addTextChangedListener(new TextWatcher() {
@@ -153,12 +214,33 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
         }
         return false;
     }
-    
+
+
+	public static String getPingYin(String inputString) {
+		HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+		format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+		format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+		format.setVCharType(HanyuPinyinVCharType.WITH_V);
+		char[] input = inputString.trim().toCharArray();
+		String output = "";
+		try {
+			for (char curchar : input) {
+				if (java.lang.Character.toString(curchar).matches("[\u4e00-\u9fa5]+")) {
+					String[] temp = PinyinHelper.toHanyuPinyinStringArray(curchar, format);
+					output += temp[0];
+				} else
+					output += java.lang.Character.toString(curchar);
+			}
+		} catch (BadHanyuPinyinOutputFormatCombination e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
 
 	public void setUpViews(String type, String value){
 		PasswordDB = new PasswordDB(this);
 		if("all".equals(type)){
-			mCursor = PasswordDB.getAll("id desc");
+			mCursor = PasswordDB.getAll("site_name asc");
 		} else if("search".equals(type)) {
 			mCursor = PasswordDB.getForSearch(value);
 		}
@@ -168,6 +250,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		UserName = (EditText)findViewById(R.id.login_name);
 		PasswordValue = (EditText)findViewById(R.id.word_value);*/
 		RecordList = (ListView)findViewById(R.id.recordslist);
+		FloatLetter = (TextView)findViewById(R.id.float_letter);
+		mSlideBar = (SlideBar)findViewById(R.id.slideBar);
 		
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();  
         
@@ -184,7 +268,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             map.put("site_name", siteName);  
             map.put("user_name", userName);  
             listItem.add(map);
-        }  
+        }
+
+		listItemLike = (ArrayList<HashMap<String, Object>>)listItem.clone();
         	
         SimpleAdapter listItemAdapter = new SimpleAdapter(this,listItem,R.layout.record_items,
             /*new String[] {"res_no", "site_name", "user_name"},   

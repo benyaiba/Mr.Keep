@@ -1,7 +1,10 @@
 package com.yaiba.keep;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -122,7 +125,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 						int position  = 0;//这个array就是传给自定义Adapter的
 
 						for(int i=0;i<listItemLike.size();i++) {
-							String siteNamePinYinOne = getPingYin(listItemLike.get(i).get("site_name").toString()).substring(0,1);
+							String siteNamePinYin = getPingYin(listItemLike.get(i).get("site_name").toString());
 							//-----------------------------
 							//Toast.makeText(MainActivity.this, listItemLike.get(i).get("site_name").toString(), Toast.LENGTH_SHORT).show();
 //							System.out.println("=>"+i);
@@ -130,7 +133,12 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 //							System.out.println("to pinyin=>"+getPingYin(listItemLike.get(i).get("site_name").toString()));
 //							System.out.println("substring(1)=>"+siteNamePinYinOne);
 							//------------------------------
-							if(siteNamePinYinOne.toLowerCase().endsWith(s.toLowerCase())){
+							String inpitS = getPingYin(s).toLowerCase();
+							int inputSLen = inpitS.length();
+							if(siteNamePinYin.length() > inputSLen ){
+								siteNamePinYin = siteNamePinYin.toLowerCase().substring(0,inputSLen);
+							}
+							if(siteNamePinYin.toLowerCase().equals(getPingYin(s).toLowerCase())){
 //								System.out.println("进入if=>");
 //								System.out.println("siteNamePinYinOne.toLowerCase()=>"+siteNamePinYinOne.toLowerCase());
 //								System.out.println("s.toLowerCase()=>"+s.toLowerCase());
@@ -140,7 +148,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 							}
 						}
 
-						RecordList.setSelection(position);//调用ListView的setSelection()方法就可实现了
+						RecordList.setSelection(position-1);//调用ListView的setSelection()方法就可实现了
 					}
 				});
 
@@ -252,8 +260,13 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		RecordList = (ListView)findViewById(R.id.recordslist);
 		FloatLetter = (TextView)findViewById(R.id.float_letter);
 		mSlideBar = (SlideBar)findViewById(R.id.slideBar);
-		
-        ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();  
+
+		//String[] letters = {  "A", "P", "P", "Z" };
+
+
+
+        ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
+		ArrayList<String> sideBarStrList = new ArrayList<String>();
         
         for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {  
             int nameColumn = mCursor.getColumnIndex("site_name");  
@@ -268,7 +281,15 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             map.put("site_name", siteName);  
             map.put("user_name", userName);  
             listItem.add(map);
+			sideBarStrList.add(siteName.substring(0,1));
         }
+
+		sideBarStrList = new ArrayList<String>(new HashSet<String>(sideBarStrList));
+		sideBarStrList.remove(null);
+		Collections.sort(sideBarStrList);
+
+		String[] letters = (String[]) sideBarStrList.toArray(new String[0]);
+		mSlideBar.setLetters(letters);
 
 		listItemLike = (ArrayList<HashMap<String, Object>>)listItem.clone();
         	
@@ -616,6 +637,26 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	public void setRecordListPosition(){
 		ListViewData app = (ListViewData)getApplication();
 		RecordList.setSelectionFromTop(app.getFirstVisiblePosition(), app.getFirstVisiblePositionTop());
+	}
+
+	public String getWordCount(String str,int len) {
+		try {
+			int counterOfDoubleByte = 0;
+			byte b[] = str.getBytes("GBK");
+			if (b.length <= len)
+				return str;
+			for (int i = 0; i < len; i++) {
+				if (b[i] < 0)
+					counterOfDoubleByte++;
+			}
+			if (counterOfDoubleByte % 2 == 0)
+				return new String(b, 0, len, "GBK");
+			else
+				return new String(b, 0, len - 1, "GBK");
+
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 	
 		

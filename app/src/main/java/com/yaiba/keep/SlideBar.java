@@ -21,9 +21,7 @@ public class SlideBar extends View {
     // 选中的项
     private int choose = -1;
     // 准备好的A~Z的字母数组
-    public static String[] letters = { "#", "A", "B", "C", "D", "E", "F", "G",
-            "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-            "U", "V", "W", "X", "Y", "Z" };
+    public static String[] letters = {};
 
     // 构造方法
     public SlideBar(Context context) {
@@ -52,7 +50,7 @@ public class SlideBar extends View {
             // 设置字体格式
             paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
-            paint.setTextSize(20f);
+            paint.setTextSize(15f);
             // 如果这一项被选中，则换一种颜色画
             if (i == choose) {
                 paint.setColor(Color.parseColor("#F88701"));
@@ -131,6 +129,12 @@ public class SlideBar extends View {
     public interface OnTouchLetterChangeListenner {
 
         void onTouchLetterChange(MotionEvent event, String s);
+    }
+
+
+    public  void  setLetters (String[] s) {
+
+        this.letters = s;
     }
 
 }

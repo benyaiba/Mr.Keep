@@ -57,7 +57,7 @@
 
 	<com.yaiba.keep.SlideBar
 		android:id="@+id/slideBar"
-		android:layout_width="30dp"
+		android:layout_width="20dp"
 		android:layout_height="wrap_content"
 		android:layout_gravity="end|bottom" />
 

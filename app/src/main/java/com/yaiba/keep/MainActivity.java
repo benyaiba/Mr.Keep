@@ -70,7 +70,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	private EditText SearchInput;
 	private TextView FloatLetter;
 	private ListView RecordList;
-	private SlideBar mSlideBar;
+	//private SlideBar mSlideBar;
 	 
 	private int RECORD_ID = 0;
 	private UpdateTask updateTask;
@@ -98,58 +98,58 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 			   }  
 			  });
 
-		mSlideBar.setOnTouchLetterChangeListenner(new SlideBar.OnTouchLetterChangeListenner() {
-
-					@Override
-					public void onTouchLetterChange(MotionEvent event, String s) {
-
-						FloatLetter.setText(s);
-						switch (event.getAction()) {
-							case MotionEvent.ACTION_DOWN:
-							case MotionEvent.ACTION_MOVE:
-								FloatLetter.setVisibility(View.VISIBLE);
-								break;
-
-							case MotionEvent.ACTION_UP:
-							default:
-								FloatLetter.postDelayed(new Runnable() {
-
-									@Override
-									public void run() {
-										FloatLetter.setVisibility(View.GONE);
-									}
-								}, 100);
-								break;
-						}
-						int position  = 0;//这个array就是传给自定义Adapter的
-
-						for(int i=0;i<listItemLike.size();i++) {
-							String siteNamePinYin = getPingYin(listItemLike.get(i).get("site_name").toString());
-							//-----------------------------
-							//Toast.makeText(MainActivity.this, listItemLike.get(i).get("site_name").toString(), Toast.LENGTH_SHORT).show();
-//							System.out.println("=>"+i);
-//							System.out.println("listItemLike.get("+i+").get(site_name).toString()=>"+listItemLike.get(i).get("site_name").toString());
-//							System.out.println("to pinyin=>"+getPingYin(listItemLike.get(i).get("site_name").toString()));
-//							System.out.println("substring(1)=>"+siteNamePinYinOne);
-							//------------------------------
-							String inpitS = getPingYin(s).toLowerCase();
-							int inputSLen = inpitS.length();
-							if(siteNamePinYin.length() > inputSLen ){
-								siteNamePinYin = siteNamePinYin.toLowerCase().substring(0,inputSLen);
-							}
-							if(siteNamePinYin.toLowerCase().equals(getPingYin(s).toLowerCase())){
-//								System.out.println("进入if=>");
-//								System.out.println("siteNamePinYinOne.toLowerCase()=>"+siteNamePinYinOne.toLowerCase());
-//								System.out.println("s.toLowerCase()=>"+s.toLowerCase());
-//								System.out.println("结束if=>");
-								position = i+1;
-								break;
-							}
-						}
-
-						RecordList.setSelection(position-1);//调用ListView的setSelection()方法就可实现了
-					}
-				});
+//		mSlideBar.setOnTouchLetterChangeListenner(new SlideBar.OnTouchLetterChangeListenner() {
+//
+//					@Override
+//					public void onTouchLetterChange(MotionEvent event, String s) {
+//
+//						FloatLetter.setText(s);
+//						switch (event.getAction()) {
+//							case MotionEvent.ACTION_DOWN:
+//							case MotionEvent.ACTION_MOVE:
+//								FloatLetter.setVisibility(View.VISIBLE);
+//								break;
+//
+//							case MotionEvent.ACTION_UP:
+//							default:
+//								FloatLetter.postDelayed(new Runnable() {
+//
+//									@Override
+//									public void run() {
+//										FloatLetter.setVisibility(View.GONE);
+//									}
+//								}, 100);
+//								break;
+//						}
+//						int position  = 0;//这个array就是传给自定义Adapter的
+//
+//						for(int i=0;i<listItemLike.size();i++) {
+//							String siteNamePinYin = getPingYin(listItemLike.get(i).get("site_name").toString());
+//							//-----------------------------
+//							//Toast.makeText(MainActivity.this, listItemLike.get(i).get("site_name").toString(), Toast.LENGTH_SHORT).show();
+////							System.out.println("=>"+i);
+////							System.out.println("listItemLike.get("+i+").get(site_name).toString()=>"+listItemLike.get(i).get("site_name").toString());
+////							System.out.println("to pinyin=>"+getPingYin(listItemLike.get(i).get("site_name").toString()));
+////							System.out.println("substring(1)=>"+siteNamePinYinOne);
+//							//------------------------------
+//							String inpitS = getPingYin(s).toLowerCase();
+//							int inputSLen = inpitS.length();
+//							if(siteNamePinYin.length() > inputSLen ){
+//								siteNamePinYin = siteNamePinYin.toLowerCase().substring(0,inputSLen);
+//							}
+//							if(siteNamePinYin.toLowerCase().equals(getPingYin(s).toLowerCase())){
+////								System.out.println("进入if=>");
+////								System.out.println("siteNamePinYinOne.toLowerCase()=>"+siteNamePinYinOne.toLowerCase());
+////								System.out.println("s.toLowerCase()=>"+s.toLowerCase());
+////								System.out.println("结束if=>");
+//								position = i+1;
+//								break;
+//							}
+//						}
+//
+//						RecordList.setSelection(position-1);//调用ListView的setSelection()方法就可实现了
+//					}
+//				});
 
 
 		SearchInput = (EditText)findViewById(R.id.searchInput);
@@ -249,14 +249,14 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		PasswordValue = (EditText)findViewById(R.id.word_value);*/
 		RecordList = (ListView)findViewById(R.id.recordslist);
 		FloatLetter = (TextView)findViewById(R.id.float_letter);
-		mSlideBar = (SlideBar)findViewById(R.id.slideBar);
+		//mSlideBar = (SlideBar)findViewById(R.id.slideBar);
 
 		//String[] letters = {  "A", "P", "P", "Z" };
 
 
 
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-		ArrayList<String> sideBarStrList = new ArrayList<String>();
+		//ArrayList<String> sideBarStrList = new ArrayList<String>();
         
         for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {  
             int nameColumn = mCursor.getColumnIndex("site_name");  
@@ -271,17 +271,17 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             map.put("site_name", siteName);  
             map.put("user_name", userName);  
             listItem.add(map);
-			sideBarStrList.add(siteName.substring(0,1));
+			//sideBarStrList.add(siteName.substring(0,1));
         }
 
-		sideBarStrList = new ArrayList<String>(new HashSet<String>(sideBarStrList));
-		sideBarStrList.remove(null);
-		Collections.sort(sideBarStrList);
+		//sideBarStrList = new ArrayList<String>(new HashSet<String>(sideBarStrList));
+		//sideBarStrList.remove(null);
+		//Collections.sort(sideBarStrList);
 
-		String[] letters = (String[]) sideBarStrList.toArray(new String[0]);
-        if(letters.length>0){
-            mSlideBar.setLetters(letters);
-        }
+//		String[] letters = (String[]) sideBarStrList.toArray(new String[0]);
+//        if(letters.length>0){
+//            mSlideBar.setLetters(letters);
+//        }
 
 		listItemLike = (ArrayList<HashMap<String, Object>>)listItem.clone();
         	

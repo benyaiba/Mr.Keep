@@ -39,7 +39,10 @@ public class SlideBar extends View {
         int width = getWidth();
         int height = getHeight() - 30;
         // 每个字母的高度
-        int singleHeight = height / letters.length;
+        int singleHeight = 1;
+        if(letters.length != 0){
+            singleHeight = height / letters.length;
+        }
         if (showBg) {
             // 画出背景
             canvas.drawColor(Color.parseColor("#55000000"));

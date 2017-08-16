@@ -1,13 +1,22 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
-    compileSdkVersion 19
+    compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.yaiba.keep"
-        minSdkVersion 14
-        targetSdkVersion 19
+        minSdkVersion 21
+        targetSdkVersion 25
+
+        versionCode 162
+        versionName "0.1.9.2"
+
     }
 
     buildTypes {
@@ -17,16 +26,17 @@ android {
         }
     }
 
-
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
 
                 //读取AndroidManifest.xml文件中的versionName属性，用于生成发布文件名
-                def androidManifest = new XmlSlurper().parse("app\\src\\main\\AndroidManifest.xml")
+//              def androidManifest = new XmlSlurper().parse("app\\src\\main\\AndroidManifest.xml")
 
-                def fileName = outputFile.name.replace("app","${defaultConfig.applicationId }_${androidManifest['@android:versionName']}")
+                def newName = "${defaultConfig.applicationId }-${defaultConfig.versionName}-${releaseTime() }"
+                def fileName = outputFile.name.replace("app",newName)
+
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -34,6 +44,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.1.0'
     compile files('lib/pinyin4j-2.5.0.jar')
+    compile 'com.android.support:support-annotations:25.3.1'
+    compile 'com.android.support:support-v13:25.3.1'
+    compile 'com.android.support:gridlayout-v7:25.3.1'
 }

@@ -279,7 +279,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		Collections.sort(sideBarStrList);
 
 		String[] letters = (String[]) sideBarStrList.toArray(new String[0]);
-		mSlideBar.setLetters(letters);
+        if(letters.length>0){
+            mSlideBar.setLetters(letters);
+        }
 
 		listItemLike = (ArrayList<HashMap<String, Object>>)listItem.clone();
         	

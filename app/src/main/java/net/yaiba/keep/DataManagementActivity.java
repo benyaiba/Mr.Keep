@@ -1,11 +1,15 @@
-package com.yaiba.keep;
+package net.yaiba.keep;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,11 +22,17 @@ import org.xmlpull.v1.XmlSerializer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
+import android.support.v4.os.EnvironmentCompat;
+import android.util.Log;
 import android.util.Xml;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,6 +42,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import static android.R.id.checkbox;
+import static android.content.ContentValues.TAG;
 
 public class DataManagementActivity extends Activity {
 	private PasswordDB PasswordDB;
@@ -48,7 +59,8 @@ public class DataManagementActivity extends Activity {
 	private TextView warmingHaveUnencodeFile;
 
 	private CheckBox encode;
-	
+	private Context context;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -58,7 +70,7 @@ public class DataManagementActivity extends Activity {
 
 		//判断文件名中是否包含20170216020803!!!!!.xml 这种文件，如果目录中包含这种文件，将在画面最下方以红色文字提示。
 		List<String> bakupFileList = new ArrayList<String>();
-		String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
+		String keepPath = Environment.getExternalStorageDirectory().toString()  + "/" +FILE_DIR_NAME;
 		File[] files = new File(keepPath).listFiles();
 
 		setContentView(R.layout.activity_data_management);
@@ -112,7 +124,7 @@ public class DataManagementActivity extends Activity {
 		   builder.setTitle("选择要恢复的文件,恢复后原有记录将被清空");
 
 		   List<String> bakupFileList = new ArrayList<String>();
-		   String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
+		   String keepPath = Environment.getExternalStorageDirectory().toString()  + "/" +FILE_DIR_NAME;
 		   File[] files = new File(keepPath).listFiles();
 
 		   //判断文件夹不存在或文件夹中没有文件时
@@ -219,8 +231,9 @@ public class DataManagementActivity extends Activity {
 		mCursor = PasswordDB.getAll(null);
 
 		//检查目录并确定生成目录结构
-		boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-		String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "//" + FILE_DIR_NAME;
+		//boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+		String path = getBasePath(this);
+		String baseDir = path + "/" + FILE_DIR_NAME;
 		Date dt = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		//String fileName = fileNamePre + sdf.format(dt)+ fileNameSuff;
@@ -230,7 +243,7 @@ public class DataManagementActivity extends Activity {
 		if(encode.isChecked()){
 			//showAboutDialog("准备","正在处理加密数据");
 			try {
-				if (sdCardExist) {
+				if (!path.isEmpty()) {
 					String fileName = sdf.format(dt)+ fileNameSuff;
 					File f = createFile(baseDir,fileName);
 
@@ -247,7 +260,7 @@ public class DataManagementActivity extends Activity {
 		} else {
 			//showAboutDialog("准备","正在处理未加密数据");
 			try {
-				if (sdCardExist) {
+				if (!path.isEmpty()) {
 					String fileName = sdf.format(dt) + "!!!!!"+ fileNameSuff;
 					File f = createFile(baseDir, fileName);
 
@@ -264,21 +277,108 @@ public class DataManagementActivity extends Activity {
 	}
 
 
+	public String getBasePath(Context pContext){
+
+		final StorageManager storageManager = (StorageManager) pContext.getSystemService(Context.STORAGE_SERVICE);
+
+		try {
+			//得到StorageManager中的getVolumeList()方法的对象
+			final Method getVolumeList = storageManager.getClass().getMethod("getVolumeList");
+			//---------------------------------------------------------------------
+
+			//得到StorageVolume类的对象
+			final Class<?> storageValumeClazz = Class.forName("android.os.storage.StorageVolume");
+			//---------------------------------------------------------------------
+			//获得StorageVolume中的一些方法
+			final Method getPath = storageValumeClazz.getMethod("getPath");
+			Method isRemovable = storageValumeClazz.getMethod("isRemovable");
+
+			Method mGetState = null;
+			//getState 方法是在4.4_r1之后的版本加的，之前版本（含4.4_r1）没有
+			// （http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4_r1/android/os/Environment.java/）
+			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+				try {
+					mGetState = storageValumeClazz.getMethod("getState");
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+			}
+			//---------------------------------------------------------------------
+
+			//调用getVolumeList方法，参数为：“谁”中调用这个方法
+			final Object invokeVolumeList = getVolumeList.invoke(storageManager);
+			//---------------------------------------------------------------------
+			final int length = Array.getLength(invokeVolumeList);
+			for (int i = 0; i < length; i++) {
+				final Object storageValume = Array.get(invokeVolumeList, i);//得到StorageVolume对象
+				final String path = (String) getPath.invoke(storageValume);
+				final boolean removable = (Boolean) isRemovable.invoke(storageValume);
+				//removable=true时，指的是可拔出外置存储/storage/emulated/0/，false时是内置存储/storage/emulated/0/
+				if(!removable){
+					String state = null;
+					if (mGetState != null) {
+						state = (String) mGetState.invoke(storageValume);
+					} else {
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+							state = Environment.getStorageState(new File(path));
+						} else {
+							if (removable) {
+								state = EnvironmentCompat.getStorageState(new File(path));
+							} else {
+								//不能移除的存储介质，一直是mounted
+								state = Environment.MEDIA_MOUNTED;
+							}
+							final File externalStorageDirectory = Environment.getExternalStorageDirectory();
+							Log.e("debug", "externalStorageDirectory==" + externalStorageDirectory);
+						}
+					}
+
+					final String msg = "path==" + path
+							+ " ,removable==" + removable
+							+ ",state==" + state;
+					Log.e("debug", msg);
+
+					return  path;
+				}
+			}
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	public File createFile(String baseDir, String fileName) {
-		File f = new File(baseDir + "//"+ fileName );
+
+		File f = new File(baseDir+ "/" + fileName );
+		Log.v("debug",baseDir);
+		Log.v("debug",baseDir+ "/" + fileName);
+		Log.v("debug",f.getParentFile().toString());
 		if(!f.getParentFile().exists()){
+			Log.v("debug","dir不存在");
 			f.getParentFile().mkdirs();
 		}
 		if(!f.exists()){
 			try {
+				Log.v("debug","文件不存在");
 				f.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+
 		return f;
 	}
-	
+
+
 	public void dataRecover(String fileName){
 
 		showAboutDialog("完成",dataRecoverFromXml("normal",fileName));

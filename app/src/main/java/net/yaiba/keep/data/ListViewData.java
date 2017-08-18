@@ -1,4 +1,4 @@
-package com.yaiba.keep.data;
+package net.yaiba.keep.data;
 
 import android.app.Application;
 /**

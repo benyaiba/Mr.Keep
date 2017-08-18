@@ -1,4 +1,4 @@
-package com.yaiba.keep;
+package net.yaiba.keep;
 
 import android.content.Context;
 import android.content.Intent;

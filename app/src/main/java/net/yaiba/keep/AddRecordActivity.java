@@ -1,8 +1,7 @@
-package com.yaiba.keep;
+package net.yaiba.keep;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,19 +10,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecordEditActivity extends Activity {
+public class AddRecordActivity extends Activity {
+	
 	private PasswordDB PasswordDB;
-	private Cursor mCursor;
+
 	private EditText SiteName;
 	private EditText UserName;
 	private EditText PasswordValue;
 	private EditText Remark;
 	private EditText PasswordLength;
-
-	private TextView PasswordLengthHint;
 
 	private CheckBox CheckboxUseNum;
 	private CheckBox CheckboxUseWordLowcase;
@@ -33,26 +30,20 @@ public class RecordEditActivity extends Activity {
 	private LinearLayout passwordOption;
 
 	private boolean isButton = true;
-
-
-	private int RECORD_ID = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		PasswordDB = new PasswordDB(this);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_record_edit);
-		RECORD_ID = this.getIntent().getIntExtra("INT", RECORD_ID);
-		
-		setUpViews();
+		setContentView(R.layout.activity_add_record);
 		
 		Button bn_add = (Button)findViewById(R.id.add);
 		bn_add.setOnClickListener(new OnClickListener(){
 			   public void  onClick(View v)     
 			   {  
-				   if(update()){
-					   Intent mainIntent = new Intent(RecordEditActivity.this,MainActivity.class);
+				   if(add()){
+					   Intent mainIntent = new Intent(AddRecordActivity.this,MainActivity.class);
 					   startActivity(mainIntent);
 					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
 					   setResult(RESULT_OK, mainIntent);  
@@ -65,7 +56,7 @@ public class RecordEditActivity extends Activity {
 //		bn_back.setOnClickListener(new OnClickListener(){
 //			   public void  onClick(View v)
 //			   {
-//					   Intent mainIntent = new Intent(RecordEditActivity.this,MainActivity.class);
+//					   Intent mainIntent = new Intent(AddRecordActivity.this,MainActivity.class);
 //					   startActivity(mainIntent);
 //					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
 //					   setResult(RESULT_OK, mainIntent);
@@ -84,28 +75,12 @@ public class RecordEditActivity extends Activity {
 				if(isButton){
 					passwordOption.setVisibility(View.VISIBLE);
 					isButton = false;
-
-					PasswordLength = (EditText)findViewById(R.id.txt_password_length);
-					PasswordLengthHint =(TextView)findViewById(R.id.txt_password_length_hint);
-					PasswordValue =(EditText)findViewById(R.id.word_value);
-
-					String password = PasswordValue.getText().toString().replace("\n","");
-
-					if (password.isEmpty() || password.length() < 4 || password.length() > 16){
-						PasswordLength.setText("8");
-						PasswordLengthHint.setText("(支持4-16长度)");
-					} else {
-						PasswordLength.setText(password.length()+"");
-						PasswordLengthHint.setText("(支持4-16长度，当前"+password.length()+")");
-					}
-
 				}else {
 					passwordOption.setVisibility(View.GONE);
 					isButton = true;
 				}
 			}
 		});
-
 
 
 		//按照选定的值生成随机密码，并填写到密码栏中
@@ -177,39 +152,38 @@ public class RecordEditActivity extends Activity {
 			}
 		});
 
-	
+
 	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		if(keyCode == KeyEvent.KEYCODE_BACK){
-			Intent mainIntent = new Intent(RecordEditActivity.this,MainActivity.class);
-			   startActivity(mainIntent);
-			   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-			   setResult(RESULT_OK, mainIntent);  
-			   finish(); 
+			Intent myIntent = new Intent();
+            myIntent = new Intent(AddRecordActivity.this,MainActivity.class);
+            startActivity(myIntent);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+            this.finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	
-	@SuppressWarnings("deprecation")
-	public Boolean update(){
-	
+
+	protected Boolean add(){
+		SiteName = (EditText)findViewById(R.id.site_name);
+		UserName = (EditText)findViewById(R.id.user_name);
+		PasswordValue = (EditText)findViewById(R.id.word_value);
+		Remark = (EditText)findViewById(R.id.remark);
+		
 		String sitename = SiteName.getText().toString().replace("\n","");
 		String username = UserName.getText().toString().replace("\n","");
 		String passwordvalue = PasswordValue.getText().toString().replace("\n","");
 		String remark = Remark.getText().toString();
-
-//		if (sitename.equals("") || username.equals("") || passwordvalue.equals("")){
-//			return false;
-//		}
+		
 		if (sitename.equals("")){
 			Toast.makeText(this, "[名称]不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-
 		if (sitename.length() >30){
 			Toast.makeText(this, "[名称]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
 			return false;
@@ -235,38 +209,26 @@ public class RecordEditActivity extends Activity {
 			return false;
 		}
 
+		if (remark.equals("")){
+			remark = "";
+		}
+
 		if (remark.length() >200){
 			Toast.makeText(this, "[备注]长度不能超过200个文字", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
 
+
+		
 		try {
-			PasswordDB.update(RECORD_ID, sitename, username, DES.encryptDES(passwordvalue), remark);
+			PasswordDB.insert(sitename, username, DES.encryptDES(passwordvalue), remark);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mCursor.requery();
-		Toast.makeText(this, "更新成功", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
 		return true;
 	}
-	
-	public void setUpViews(){
-		PasswordDB = new PasswordDB(this);
-		mCursor = PasswordDB.getOne(RECORD_ID);
-		 
-		SiteName = (EditText)findViewById(R.id.site_name);
-		UserName = (EditText)findViewById(R.id.user_name);
-		PasswordValue = (EditText)findViewById(R.id.word_value);
-		Remark = (EditText)findViewById(R.id.remark);
 
-		SiteName.setText(mCursor.getString(1));
-		UserName.setText(mCursor.getString(2));
-		try {
-			PasswordValue.setText(DES.decryptDES(mCursor.getString(3)));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Remark.setText(mCursor.getString(4));
-	}
 }

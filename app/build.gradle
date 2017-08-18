@@ -10,12 +10,12 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.yaiba.keep"
+        applicationId "net.yaiba.keep"
         minSdkVersion 21
         targetSdkVersion 25
 
         versionCode 162
-        versionName "0.1.9.3"
+        versionName "0.1.9.4"
 
     }
 

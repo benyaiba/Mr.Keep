@@ -1,4 +1,4 @@
-package com.yaiba.keep;
+package net.yaiba.keep;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.yaiba.keep.data.ListViewData;
-import com.yaiba.keep.SlideBar;
+import net.yaiba.keep.data.ListViewData;
+import net.yaiba.keep.SlideBar;
 
-import com.yaiba.keep.PasswordDB;
-import com.yaiba.keep.UpdateTask;
+import net.yaiba.keep.PasswordDB;
+import net.yaiba.keep.UpdateTask;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

@@ -235,7 +235,7 @@ public class DataManagementActivity extends Activity {
 		String path = getBasePath(this);
 		String baseDir = path + "/" + FILE_DIR_NAME;
 		Date dt = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm_ss");
 		//String fileName = fileNamePre + sdf.format(dt)+ fileNameSuff;
 
 

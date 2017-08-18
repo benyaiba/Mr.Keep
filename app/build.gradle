@@ -15,7 +15,7 @@ android {
         targetSdkVersion 25
 
         versionCode 162
-        versionName "0.1.9.4"
+        versionName "0.1.9.5"
 
     }
 

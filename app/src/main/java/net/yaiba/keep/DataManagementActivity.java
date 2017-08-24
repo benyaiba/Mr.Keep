@@ -148,6 +148,7 @@ public class DataManagementActivity extends Activity {
 				   builder.create().show();
 
 			   } else {
+				   Collections.sort(bakupFileList);
 				   Collections.reverse(bakupFileList);
 
 				   bakFileArray = bakupFileList.toArray(new String[bakupFileList.size()]);

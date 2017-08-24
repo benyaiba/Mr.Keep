@@ -431,9 +431,6 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     alertDialog.show();
 	}
 	
-	
-	
-	
 	 
 	@SuppressWarnings("deprecation")
 	public void delete(){

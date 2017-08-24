@@ -40,6 +40,20 @@ public class RecordDetailActivity extends Activity {
 //					   finish();
 //			   }
 //			  });
+
+
+		Button bn_go_edit = (Button)findViewById(R.id.go_edit);
+		bn_go_edit.setOnClickListener(new OnClickListener(){
+			public void  onClick(View v)
+			{
+				//画面迁移到edit画面
+				Intent mainIntent = new Intent(RecordDetailActivity.this,RecordEditActivity.class);
+				mainIntent.putExtra("INT", RECORD_ID);
+				startActivity(mainIntent);
+				setResult(RESULT_OK, mainIntent);
+				finish();
+			}
+		});
 	
 	}
 	

@@ -16,7 +16,7 @@ public class RecordDetailActivity extends Activity {
 	private Cursor mCursor;
 	private TextView SiteName;
 	private TextView UserName;
-	private EditText PasswordValue;
+	private TextView PasswordValue;
 	private TextView Remark;
 	private int RECORD_ID = 0;
 	
@@ -76,7 +76,7 @@ public class RecordDetailActivity extends Activity {
 		 
 		SiteName = (TextView)findViewById(R.id.site_name);
 		UserName = (TextView)findViewById(R.id.user_name);
-		PasswordValue = (EditText)findViewById(R.id.word_value);
+		PasswordValue = (TextView)findViewById(R.id.word_value);
 		Remark = (TextView)findViewById(R.id.remark);
 		
 		SiteName.setText(mCursor.getString(1));

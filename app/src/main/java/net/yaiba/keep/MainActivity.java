@@ -84,7 +84,16 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_list);
-		setUpViews("all",null);
+
+		// 当迁移当前页面时，判断检索框中是否有内容，如果有，恢复检索时下拉列表中的内容，并设置检索框中的文字。
+		final ListViewData app = (ListViewData)getApplication();
+		if("".equals(app.getQuickSearchText())){
+			setUpViews("all",null);
+		} else {
+			SearchInput = (EditText)findViewById(R.id.searchInput);
+			SearchInput.setText(app.getQuickSearchText());
+			setUpViews("search",app.getQuickSearchText());
+		}
 
 		//返回前设置前次的位置值
 		setRecordListPosition();
@@ -160,14 +169,17 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+				final ListViewData app = (ListViewData)getApplication();
             	if(SearchInput.getText().toString().trim().length()!=0){
             		try {
             			setUpViews("search",SearchInput.getText().toString().trim());
+            			app.setQuickSearchText(SearchInput.getText().toString().trim());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
             	} else {
             		setUpViews("all",null);
+            		app.setQuickSearchText("");
             	}
             }
             
@@ -302,7 +314,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	        @Override  
 	        public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
 	            //menu.setHeaderTitle("操作");     
-	            menu.add(0, 0, 0, "编辑");  
+	            //menu.add(0, 0, 0, "编辑");
 	            menu.add(0, 1, 0, "删除");     
 	        }  
         });
@@ -320,6 +332,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				go_update();
 			break;
 			case 1:
+				//保存当前一览位置
+				saveListViewPositionAndTop();
+
 				AlertDialog.Builder builder= new AlertDialog.Builder(this);
 				builder.setIcon(android.R.drawable.ic_dialog_info);
 				builder.setTitle("确认");
@@ -327,7 +342,21 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  
                     public void onClick(DialogInterface dialog, int whichButton) {  
                     	delete();
-                    	setUpViews("all",null);
+
+						// 当迁移当前页面时，判断检索框中是否有内容，如果有，恢复检索时下拉列表中的内容，并设置检索框中的文字。
+						final ListViewData app = (ListViewData)getApplication();
+						if("".equals(app.getQuickSearchText())){
+							setUpViews("all",null);
+						} else {
+							SearchInput = (EditText)findViewById(R.id.searchInput);
+							SearchInput.setText(app.getQuickSearchText());
+							setUpViews("search",app.getQuickSearchText());
+						}
+
+						//返回前设置前次的位置值
+						setRecordListPosition();
+
+
                     }  
                 });
 				builder.setNegativeButton("取消", null);

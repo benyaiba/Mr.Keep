@@ -12,7 +12,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v13.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
@@ -580,6 +582,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 			return "";
 		}
 	}
+
+
 	
 		
 }

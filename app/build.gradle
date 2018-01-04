@@ -6,7 +6,6 @@ def releaseTime() {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
@@ -15,7 +14,7 @@ android {
         targetSdkVersion 25
 
         versionCode 162
-        versionName "0.2.0.0"
+        versionName "0.2.1.0"
 
     }
 
@@ -26,19 +25,13 @@ android {
         }
     }
 
+    //升级到 Android Studio 3.0 + Gradle 4.1 遇到的一些坑及解决方案
+    //http://blog.csdn.net/CHITTY1993/article/details/78667069
+    //https://stackoverflow.com/questions/44239235/android-gradle-3-0-0-alpha2-plugin-cannot-set-the-value-of-read-only-property
     android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-
-                //读取AndroidManifest.xml文件中的versionName属性，用于生成发布文件名
-//              def androidManifest = new XmlSlurper().parse("app\\src\\main\\AndroidManifest.xml")
-
-                def newName = "${defaultConfig.applicationId }-${defaultConfig.versionName}-${releaseTime() }"
-                def fileName = outputFile.name.replace("app",newName)
-
-                output.outputFile = new File(outputFile.parent, fileName)
-            }
+        variant.outputs.all { output ->
+            def newName = "${defaultConfig.applicationId }-${defaultConfig.versionName}-${releaseTime() }" + ".apk"
+            outputFileName = newName
         }
     }
 }

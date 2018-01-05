@@ -255,8 +255,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	public void setUpViews(String type, String value){
 		PasswordDB = new PasswordDB(this);
 		if("all".equals(type)){
-			mCursor = PasswordDB.getAll("site_name asc");
-			lCount = PasswordDB.getAllCount("site_name asc");
+			mCursor = PasswordDB.getAll("id desc");
+			lCount = PasswordDB.getAllCount("id desc");
 		} else if("search".equals(type)) {
 			mCursor = PasswordDB.getForSearch(value);
 			lCount = PasswordDB.getForSearchCount(value);

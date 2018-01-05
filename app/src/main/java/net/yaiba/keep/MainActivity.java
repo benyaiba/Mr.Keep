@@ -64,6 +64,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	private static final int MENU_CHECK_UPDATE = 5;
 	private PasswordDB PasswordDB;
 	private Cursor mCursor;
+	private Long lCount;
 	
 	private EditText SiteName;
 	private EditText UserName;
@@ -71,6 +72,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 	private EditText Remark;
 	private EditText SearchInput;
 	private TextView FloatLetter;
+	private TextView TotalCount;
 	private ListView RecordList;
 	//private SlideBar mSlideBar;
 	 
@@ -195,8 +197,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
 		});
 
+
 	}
-	
+
 	private static Boolean isExit = false;
     private static Boolean hasTask = false;
     Timer tExit = new Timer();
@@ -253,11 +256,16 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		PasswordDB = new PasswordDB(this);
 		if("all".equals(type)){
 			mCursor = PasswordDB.getAll("site_name asc");
+			lCount = PasswordDB.getAllCount("site_name asc");
 		} else if("search".equals(type)) {
 			mCursor = PasswordDB.getForSearch(value);
+			lCount = PasswordDB.getForSearchCount(value);
 		}
-		
-		 
+
+		//将查找到的记录数显示到检索框下面
+		TotalCount = (TextView) findViewById(R.id.totalCount);
+		TotalCount.setText("记录数：x".replace("x", lCount.toString()));
+
 		/*SiteName = (EditText)findViewById(R.id.site_name);
 		UserName = (EditText)findViewById(R.id.login_name);
 		PasswordValue = (EditText)findViewById(R.id.word_value);*/
@@ -271,16 +279,16 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 		//ArrayList<String> sideBarStrList = new ArrayList<String>();
-        
-        for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {  
-            int nameColumn = mCursor.getColumnIndex("site_name");  
-            int phoneColumn = mCursor.getColumnIndex("user_name");  
+
+        for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {
+            int nameColumn = mCursor.getColumnIndex("site_name");
+            int phoneColumn = mCursor.getColumnIndex("user_name");
             /*String resNo = "["+mCursor.getString(resNoColumn)+"]"; */
-            String siteName = mCursor.getString(nameColumn);  
-            String userName = mCursor.getString(phoneColumn); 
-            
-            HashMap<String, Object> map = new HashMap<String, Object>();  
-            //map.put("ItemImage", R.drawable.checked);//图像资源的ID  
+            String siteName = mCursor.getString(nameColumn);
+            String userName = mCursor.getString(phoneColumn);
+
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            //map.put("ItemImage", R.drawable.checked);//图像资源的ID
             /*map.put("res_no", resNo);*/
             map.put("site_name", siteName);  
             map.put("user_name", userName);  

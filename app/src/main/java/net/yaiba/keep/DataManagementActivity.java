@@ -63,6 +63,9 @@ public class DataManagementActivity extends Activity {
 	private CheckBox encode;
 	private Context context;
 
+	private TextView TotalCount;
+	private Long lCount;
+
 	//检测是否有写的权限用
 	private static final int REQUEST_EXTERNAL_STORAGE = 1;
 	private static String[] PERMISSIONS_STORAGE = {
@@ -110,7 +113,9 @@ public class DataManagementActivity extends Activity {
 //			  });
 
 
-
+		lCount = PasswordDB.getAllCount("site_name asc");
+		TotalCount = (TextView) findViewById(R.id.redordCount);
+		TotalCount.setText("可备份记录数：x".replace("x", lCount.toString()));
 		
 		
 		Button bn_data_bakup = (Button)findViewById(R.id.data_bakup);
@@ -262,7 +267,7 @@ public class DataManagementActivity extends Activity {
 					BufferedWriter bf = new BufferedWriter(fileWriter);
 					bf.write(writeToString(mCursor,true));
 					bf.flush();
-					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡。(已加密处理)");
+					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡，包含"+lCount.toString()+"条记录。(已加密处理)");
 				}
 			} catch (IOException e) {
 				showAboutDialog("错误","处理数据时出错，文件未生成");
@@ -279,7 +284,7 @@ public class DataManagementActivity extends Activity {
 					BufferedWriter bf = new BufferedWriter(fileWriter);
 					bf.write(writeToString(mCursor,false));
 					bf.flush();
-					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡。(备份数据未加密，请妥善保存。)");
+					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡，包含"+lCount.toString()+"条记录。(备份数据未加密，请妥善保存。)");
 				}
 			} catch (IOException e) {
 				showAboutDialog("错误","处理数据时出错，文件未生成");

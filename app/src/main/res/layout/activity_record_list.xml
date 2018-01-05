@@ -14,15 +14,30 @@
 	   <LinearLayout
 		   android:orientation="horizontal"
 		   android:layout_width="fill_parent"
-		   android:layout_height="50dp"
-		   android:layout_margin="10dp">
+		   android:layout_height="65dp"
+		   android:layout_margin="0dp">
 
-		   <EditText
-			   android:id="@+id/searchInput"
+
+		   <LinearLayout
+			   android:orientation="vertical"
 			   android:layout_width="230dp"
-			   android:layout_height="50dp"
-			   android:layout_marginLeft="10dp"
-			   android:hint="@string/record_list_search" />
+			   android:layout_height="65dp">
+			   <EditText
+				   android:id="@+id/searchInput"
+				   android:layout_width="230dp"
+				   android:layout_height="50dp"
+				   android:layout_marginLeft="10dp"
+				   android:hint="@string/record_list_search" />
+			   <TextView
+				   android:id="@+id/totalCount"
+				   android:layout_width="200dp"
+				   android:layout_height="15dp"
+				   android:text=""
+				   android:textColor="@color/gray"
+				   android:textSize="12sp"
+				   android:layout_marginLeft="12dp"/>
+
+		   </LinearLayout>
 
 		   <Button
 			   android:id="@+id/go_add"

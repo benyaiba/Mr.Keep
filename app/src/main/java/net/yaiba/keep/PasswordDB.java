@@ -112,4 +112,25 @@ public class PasswordDB extends SQLiteOpenHelper{
 		db.update(TABLE_NAME, cv, where, whereValue);
 	}
 
+	public long getAllCount(String orderBy){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select count(*) from " + TABLE_NAME + " order by " + orderBy, null);
+		if (cursor.moveToNext()) {
+			return cursor.getLong(0);
+		}
+		return 0;
+	}
+
+	public long getForSearchCount(String siteName) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select count(*) from " + TABLE_NAME + " where " + SITE_NAME + " LIKE '%" + siteName + "%'", null);
+		if (cursor.moveToNext()) {
+			return cursor.getLong(0);
+		}
+		return 0;
+	}
+
+
+
+
 }

@@ -50,6 +50,17 @@
 					android:textStyle="normal|italic"
 					android:textColor="@color/gray" />
 
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="295dp"
+					android:layout_height="wrap_content">
+
+					<TextView android:id="@+id/redordCount"
+						android:layout_width="180dp"
+						android:layout_height="wrap_content"
+						android:textSize="16sp"
+						android:layout_marginTop="4dp"
+						android:text=""/>
+
 					<CheckBox	android:id="@+id/encode"
 						android:text="@string/menu_useEncode"
 						android:layout_width="140dp"
@@ -61,6 +72,7 @@
 						android:layout_marginLeft="0dp"
 						android:paddingLeft="0dp"
 						android:paddingTop="0dp" />
+				</LinearLayout>
 
 				</LinearLayout>
 			<!--上下布局，右侧文字结束-->

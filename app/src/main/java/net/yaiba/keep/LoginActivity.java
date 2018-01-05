@@ -95,7 +95,7 @@ public class LoginActivity extends Activity {
 
 		//设置首页版本
 		TextView textView = (TextView) findViewById(R.id.version_id);
-		textView.setText(CustomUtils.getVersion(this));
+		textView.setText(CustomUtils.getVersion(this)+"@2018");
 
 	}
 	

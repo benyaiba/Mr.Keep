@@ -66,6 +66,14 @@ public class DataManagementActivity extends Activity {
 	private TextView TotalCount;
 	private Long lCount;
 
+	public Integer encryptFileCount;
+	public Integer unEncryptFileCount;
+	public Integer messImportFileCount;
+
+	private TextView FileCount;
+	private TextView MessImportfileCount;
+
+
 	//检测是否有写的权限用
 	private static final int REQUEST_EXTERNAL_STORAGE = 1;
 	private static String[] PERMISSIONS_STORAGE = {
@@ -87,16 +95,49 @@ public class DataManagementActivity extends Activity {
 		File[] files = new File(keepPath).listFiles();
 
 		setContentView(R.layout.activity_data_management);
+
+		lCount = PasswordDB.getAllCount("site_name asc");
+
+		encryptFileCount =0 ;
+		unEncryptFileCount =0;
+		messImportFileCount =0 ;
+
 		if(files != null){
 			for (int i = 0; i < files.length; i++) {
 				File file = files[i];
-				if(file.getName().indexOf("!!!!!") != -1 || file.getName().indexOf("keepres_mass")!= -1){
-					warmingHaveUnencodeFile = (TextView)findViewById(R.id.warmingHaveUnencodeFile);
-					warmingHaveUnencodeFile.setText(R.string.menu_warming_have_unencode_file);
-					warmingHaveUnencodeFile.setTextColor(getResources().getColor(R.color.royalblue));
-					break;
+//				if(file.getName().indexOf("!!!!!") != -1 || file.getName().indexOf("keepres_mass")!= -1){
+//					warmingHaveUnencodeFile = (TextView)findViewById(R.id.warmingHaveUnencodeFile);
+//					warmingHaveUnencodeFile.setText(R.string.menu_warming_have_unencode_file);
+//					warmingHaveUnencodeFile.setTextColor(getResources().getColor(R.color.royalblue));
+//					break;
+//				}
+
+				if(file.getName().contains(".xml")){//判断是备份或导入文件
+					if(file.getName().contains("!!!!!")){//判断这个文件是非加密的备份文件
+						unEncryptFileCount ++;
+					} else if(file.getName().contains("keepres_mass")) {//判断这个文件是批量导入文件
+						messImportFileCount ++;
+					} else {//判断是常规备份文件
+						encryptFileCount ++;
+					}
 				}
 			}
+			 if(unEncryptFileCount >0 || messImportFileCount>0){
+				 warmingHaveUnencodeFile = (TextView)findViewById(R.id.warmingHaveUnencodeFile);
+				 warmingHaveUnencodeFile.setText(R.string.menu_warming_have_unencode_file);
+				 warmingHaveUnencodeFile.setTextColor(getResources().getColor(R.color.royalblue));
+			 }
+
+
+			TotalCount = (TextView) findViewById(R.id.redordCount);
+			TotalCount.setText("可备份记录数：x".replace("x", lCount.toString()));
+
+			FileCount = (TextView) findViewById(R.id.fileCount);
+			FileCount.setText("加密/未加密文件数：x/y".replace("x", encryptFileCount.toString()).replace("y",unEncryptFileCount.toString()));
+
+			MessImportfileCount = (TextView) findViewById(R.id.messImportfileCount);
+			MessImportfileCount.setText("批量导入文件数：x".replace("x", messImportFileCount.toString()));
+
 		}
 
 		// 注释掉区域暂未开启使用
@@ -113,9 +154,6 @@ public class DataManagementActivity extends Activity {
 //			  });
 
 
-		lCount = PasswordDB.getAllCount("site_name asc");
-		TotalCount = (TextView) findViewById(R.id.redordCount);
-		TotalCount.setText("可备份记录数：x".replace("x", lCount.toString()));
 		
 		
 		Button bn_data_bakup = (Button)findViewById(R.id.data_bakup);
@@ -268,6 +306,7 @@ public class DataManagementActivity extends Activity {
 					bf.write(writeToString(mCursor,true));
 					bf.flush();
 					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡，包含"+lCount.toString()+"条记录。(已加密处理)");
+					refresh();
 				}
 			} catch (IOException e) {
 				showAboutDialog("错误","处理数据时出错，文件未生成");
@@ -285,6 +324,7 @@ public class DataManagementActivity extends Activity {
 					bf.write(writeToString(mCursor,false));
 					bf.flush();
 					showAboutDialog("完成","备份文件"+fileName+"已输出到SD卡，包含"+lCount.toString()+"条记录。(备份数据未加密，请妥善保存。)");
+					refresh();
 				}
 			} catch (IOException e) {
 				showAboutDialog("错误","处理数据时出错，文件未生成");
@@ -572,7 +612,9 @@ public class DataManagementActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
- 	
 
+	public void refresh() {
+		onCreate(null);
+	}
 
 }

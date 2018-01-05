@@ -10,16 +10,16 @@
 		android:layout_height="125dp"
 		android:layout_marginLeft="2dp"
 		android:layout_marginRight="2dp"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="1dp"
 		android:weightSum="1">
 
 		<!--左右布局，依次是文字、右按钮开始-->
 		<LinearLayout android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="110dp"
+			android:layout_height="115dp"
 			android:layout_marginLeft="2dp"
 			android:layout_marginRight="2dp"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="5dp"
 			android:weightSum="1">
 
 
@@ -27,7 +27,7 @@
 			<!--上下布局，左侧文字开始-->
 			<LinearLayout android:orientation="vertical"
 					android:layout_width="295dp"
-					android:layout_height="100dp"
+					android:layout_height="115dp"
 					android:layout_marginLeft="5dp"
 					android:layout_marginRight="0dp"
 					android:weightSum="1">
@@ -57,9 +57,9 @@
 					<TextView android:id="@+id/redordCount"
 						android:layout_width="180dp"
 						android:layout_height="wrap_content"
-						android:textSize="16sp"
+						android:textSize="14sp"
 						android:layout_marginTop="4dp"
-						android:text=""/>
+						android:text="可备份记录数：x"/>
 
 					<CheckBox	android:id="@+id/encode"
 						android:text="@string/menu_useEncode"
@@ -73,6 +73,8 @@
 						android:paddingLeft="0dp"
 						android:paddingTop="0dp" />
 				</LinearLayout>
+
+
 
 				</LinearLayout>
 			<!--上下布局，右侧文字结束-->
@@ -106,7 +108,7 @@
 		android:layout_height="125dp"
 		android:layout_marginLeft="2dp"
 		android:layout_marginRight="2dp"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="1dp"
 		android:weightSum="1">
 
 		<!--左右布局，依次是按钮、右侧文字开始-->
@@ -115,7 +117,7 @@
 			android:layout_height="110dp"
 			android:layout_marginLeft="2dp"
 			android:layout_marginRight="2dp"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="5dp"
 			android:weightSum="1">
 
 
@@ -144,6 +146,13 @@
 					android:text="@string/data_bakup_description_dir"
 					android:textStyle="normal|italic"
 					android:textColor="@color/gray" />
+
+				<TextView android:id="@+id/fileCount"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:textSize="14sp"
+					android:layout_marginTop="5dp"
+					android:text="加密/未加密文件数：x/y z"/>
 			</LinearLayout>
 			<!--上下布局，右侧文字结束-->
 
@@ -174,10 +183,10 @@
 	<!--_mess_import区域开始-->
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent"
-		android:layout_height="145dp"
+		android:layout_height="165dp"
 		android:layout_marginLeft="2dp"
 		android:layout_marginRight="2dp"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="1dp"
 		android:weightSum="1">
 
 		<!--左右布局，依次是按钮、右侧文字开始-->
@@ -186,13 +195,13 @@
 			android:layout_height="fill_parent"
 			android:layout_marginLeft="2dp"
 			android:layout_marginRight="2dp"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="0dp"
 			android:weightSum="1">
 
 			<!--上下布局，右侧文字开始-->
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="295dp"
-				android:layout_height="130dp"
+				android:layout_height="160dp"
 				android:layout_marginLeft="5dp"
 				android:layout_marginRight="0dp"
 				android:weightSum="1">
@@ -213,6 +222,13 @@
 					android:text="@string/data_mess_import_description_dir"
 					android:textStyle="normal|italic"
 					android:textColor="@color/gray" />
+
+				<TextView android:id="@+id/messImportfileCount"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:textSize="14sp"
+					android:layout_marginTop="5dp"
+					android:text="批量导入文件数：x z"/>
 
 			</LinearLayout>
 			<!--上下布局，右侧文字结束-->
@@ -261,8 +277,8 @@
 		android:layout_height="fill_parent"
 		android:layout_marginLeft="10dp"
 		android:layout_marginRight="0dp"
-		android:layout_marginTop="40dp"
-		android:text=""
+		android:layout_marginTop="10dp"
+		android:text="warmingHaveUnencodeFile"
 		android:weightSum="1"
 		android:textSize="14sp"
 		android:textStyle="normal|bold" />

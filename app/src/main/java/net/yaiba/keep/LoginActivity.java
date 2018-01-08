@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,9 @@ public class LoginActivity extends Activity {
 	private EditText Password;
 	private EditText Password2;
 	private EditText loginPassword;
+
+	private ImageView indexLogo;
+	private int indexLogoClickCount = 1;
 
 	private Context context;
 	
@@ -89,7 +95,29 @@ public class LoginActivity extends Activity {
                 public void afterTextChanged(Editable s) {
                 	//Toast.makeText(LoginActivity.this, "afterTextChanged", Toast.LENGTH_SHORT).show();
                 }
-        });
+       		 });
+
+
+			indexLogo = (ImageView) findViewById(R.id.index_logo);
+			indexLogo.setOnClickListener(new OnClickListener(){
+				public void  onClick(View v)
+				{
+
+					if(indexLogoClickCount >= 16 && indexLogoClickCount < 88){
+						indexLogo.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.index_logo_egg1));
+					}
+
+					if(indexLogoClickCount >= 88){
+						indexLogo.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.index_logo_egg2));
+					}
+
+					indexLogoClickCount++;
+
+				}
+			});
+
+
+
 
 		}
 

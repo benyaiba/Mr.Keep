@@ -71,11 +71,13 @@
                 <Button
                     android:id="@+id/random_password"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
+                    android:background="@drawable/btn_nor_down_grey"
+                    android:padding="5dp"
                     android:text="帮朕生成随机密码" />
 
             </LinearLayout>
@@ -239,6 +241,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
                     android:textSize="14dp"
+                    android:background="@drawable/btn_nor_down_green"
                     android:text="生成" />
 
             </LinearLayout>
@@ -263,6 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
+                android:background="@drawable/btn_nor_down_green"
                 android:text="保存" />
 
             <!--纯占位，没招了，要不按钮下边儿看不见了！-->

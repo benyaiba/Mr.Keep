@@ -18,11 +18,8 @@
     <string name="reg">注册</string>
     
     <string name="what_updated">
-        0.2.6.0\n在登录页面设计了一个小彩蛋 #35
-        \n\n0.2.5.0\n#22 #25 #26 #27 #28 #29 #32 #33 #34 更新
-        \n\n0.1.9.2\n增加对Android 7的支持
-        \n\n0.1.9.1\n修正滑动检索时汉字的问题
-        \n\n0.1.9.0\n一览右侧增加滑动检索定位功能  #18
+        0.2.7.0\n修改导入导出文件生成的位置 #40,\n参考Mr.Timiup更新按钮样式 #38
+        \n\n0.2.6.0\n在登录页面设计了一个小彩蛋 #35
     </string>
     <string name="partners">\@石头大风吹</string>
     <string name="about_keep">
@@ -58,12 +55,12 @@
     
     <string name="data_bakup">数据备份</string>
     <string name="data_bakup_description">数据将以文件形式存储在您的设备中</string>
-    <string name="data_bakup_description_dir">/keep/</string>
+    <string name="data_bakup_description_dir">/yaiba.net/Mr.Keep/</string>
     <string name="data_recover">数据恢复</string>
     <string name="data_recover_description">程序会读取指定目录中的备份文件</string>
     <string name="data_mess_import">批量导入</string>
     <string name="data_mess_import_description">避免初期手工录入的繁琐，本程序支持批量导入账户信息</string>
-    <string name="data_mess_import_description_dir">/keep/keepres_mass.xml\n本文件格式参考导出文件，密码部分填写明文，程序会自动识别并加密导入</string>
+    <string name="data_mess_import_description_dir">/yaiba.net/Mr.Keep/keepres_mass.xml\n本文件格式参考导出文件，密码部分填写明文，程序会自动识别并加密导入</string>
     
     
 	<string name="dialog_update_title">更新</string>

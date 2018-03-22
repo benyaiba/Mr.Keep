@@ -85,6 +85,8 @@
 				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
 				android:textSize="24sp"
+				android:padding="5dp"
+				android:background="@drawable/btn_nor_down_green"
 				android:text="备份"/>
 
 		</LinearLayout>
@@ -162,6 +164,8 @@
 				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
 				android:textSize="24sp"
+				android:padding="5dp"
+				android:background="@drawable/btn_nor_down_green"
 				android:text="恢复" />
 
 
@@ -239,6 +243,8 @@
 				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
 				android:textSize="24sp"
+				android:padding="5dp"
+				android:background="@drawable/btn_nor_down_green"
 				android:text="批量" />
 
 		</LinearLayout>
@@ -278,7 +284,7 @@
 		android:layout_marginLeft="10dp"
 		android:layout_marginRight="0dp"
 		android:layout_marginTop="10dp"
-		android:text="warmingHaveUnencodeFile"
+		android:text=""
 		android:weightSum="1"
 		android:textSize="14sp"
 		android:textStyle="normal|bold" />

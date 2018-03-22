@@ -52,7 +52,7 @@ public class DataManagementActivity extends Activity {
 	private int RECORD_ID = 0;
 	private int selectBakupFileIndex = 0;
 	private String[] bakFileArray ;
-	private String FILE_DIR_NAME = "keep";
+	private String FILE_DIR_NAME = "yaiba.net//Mr.Keep";
 	//private String fileName = "keepres.xml";
 	//private String fileNamePre = "keep_";
 	private String fileNameSuff = ".xml";

@@ -387,8 +387,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		menu.add(Menu.NONE, MENU_IMPORT_EXPOERT, 0, this.getString(R.string.menu_inport_export));//备份与恢复
 		menu.add(Menu.NONE, MENU_CHANGE_LOGIN_PASSWORD, 0, this.getString(R.string.menu_change_login_password));//修改登录密码
 		menu.add(Menu.NONE, MENU_WHATUPDATE, 0, this.getString(R.string.menu_whatupdate));//更新信息
-		menu.add(Menu.NONE, MENU_CHECK_UPDATE, 0, this.getString(R.string.menu_checkupdate));//检查更新
-		menu.add(Menu.NONE, MENU_SUPPORT, 0, this.getString(R.string.menu_support));//技术支持
+		menu.add(Menu.NONE, MENU_CHECK_UPDATE, 0, this.getString(R.string.menu_checkupdate));//获取更新
+		//menu.add(Menu.NONE, MENU_SUPPORT, 0, this.getString(R.string.menu_support));//技术支持
 		menu.add(Menu.NONE, MENU_ABOUT, 0, this.getString(R.string.menu_about));//关于Keep
 		return true;
 	}
@@ -406,16 +406,15 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				title = this.getString(R.string.menu_about);//关于Keep
 				msg = this.getString(R.string.about_keep);
 				msg = msg + "\n\n";
-				msg = msg + "@"+getAppVersion();
-				msg = msg + "\n";
-				msg = msg + "AndroidSDK:"+getminSdkVersion();
+				msg = msg + getAppVersion()+"@2023 | "+ "Android11";
 				showAboutDialog(title,msg);
 			break;
-			case MENU_SUPPORT:
+/*			case MENU_SUPPORT:
 				title = this.getString(R.string.menu_support);//技术支持
 				msg = this.getString(R.string.partners);
 				showAboutDialog(title,msg);
 			break;
+ */
 			case MENU_WHATUPDATE:
 				title = this.getString(R.string.menu_whatupdate);//更新信息
 				msg = msg + this.getString(R.string.what_updated);
@@ -425,7 +424,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 			case MENU_CHECK_UPDATE:
 				title = this.getString(R.string.menu_checkupdate);//检查更新
 				String url = "https://github.com/benyaiba/Mr.Keep/releases";
-				msg = url+"\n\n"+"点击确定，复制地址到剪贴板";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
+				msg = url+"\n\n"+"点击确定，复制下载地址到剪贴板\n※可能需要科学上网\n\n";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
 
 //				注释网络功能的原因：
 //				因为太多的原因导致访问github不太稳定，检测安装包状态很容易出错。
@@ -501,7 +500,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						ClipboardManager manager = (ClipboardManager) MainActivity.super.getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-						ClipData mClipData =ClipData.newRawUri("Label", Uri.parse(url));
+						//ClipData mClipData =ClipData.newRawUri("Label", Uri.parse(url));
+						ClipData mClipData =ClipData.newPlainText("Label", url);
 						manager.setPrimaryClip(mClipData);
 						Toast.makeText(MainActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
 

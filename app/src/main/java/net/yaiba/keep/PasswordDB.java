@@ -59,7 +59,7 @@ public class PasswordDB extends SQLiteOpenHelper{
 	 
 	 public Cursor getForSearch(String siteName) {
 		 SQLiteDatabase db = this.getReadableDatabase();
-		 Cursor cursor = db.query(true, TABLE_NAME, new String[] {RECORD_ID, SITE_NAME,USER_NAME,PASSWORD_VALUE,REMARK}, SITE_NAME + " LIKE '%" + siteName + "%'", null, null, null, null, null);
+		 Cursor cursor = db.query(true, TABLE_NAME, new String[] {RECORD_ID, SITE_NAME,USER_NAME,PASSWORD_VALUE,REMARK}, SITE_NAME + " LIKE '%" + siteName + "%'", null, null, null, "id desc", null);
          return cursor;
      }
 	

@@ -63,7 +63,7 @@
             android:textAlignment="center"
             android:id="@+id/textView2"
             android:background="@drawable/boder"/>
-
+<!--
         <TextView	android:id="@+id/version_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -74,6 +74,6 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:textAllCaps="false" />
-
+-->
     </LinearLayout>
 </LinearLayout>

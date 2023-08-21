@@ -275,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine"
-                android:maxLength="500" />
+                android:maxLength="2000" />
 
             <Button
                 android:id="@+id/add"

@@ -185,7 +185,7 @@ public class AddRecordActivity extends Activity {
 			return false;
 		}
 		if (sitename.length() >30){
-			Toast.makeText(this, "[名称]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[名称]长度不能超过30个文字，当前文字"+sitename.length(), Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
@@ -195,7 +195,7 @@ public class AddRecordActivity extends Activity {
 		}
 
 		if (username.length() >30){
-			Toast.makeText(this, "[登陆名]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[登陆名]长度不能超过30个文字，当前文字"+username.length(), Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
@@ -205,7 +205,7 @@ public class AddRecordActivity extends Activity {
 		}
 
 		if (passwordvalue.length() >30){
-			Toast.makeText(this, "[密码]长度不能超过30个文字", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "[密码]长度不能超过30个文字，当前文字"+passwordvalue.length(), Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
@@ -213,8 +213,8 @@ public class AddRecordActivity extends Activity {
 			remark = "";
 		}
 
-		if (remark.length() >200){
-			Toast.makeText(this, "[备注]长度不能超过200个文字", Toast.LENGTH_SHORT).show();
+		if (remark.length() >2000){
+			Toast.makeText(this, "[备注]长度不能超过2000个文字，当前文字"+remark.length(), Toast.LENGTH_SHORT).show();
 			return false;
 		}
 

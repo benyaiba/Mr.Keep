@@ -5,17 +5,16 @@ def releaseTime() {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdk 30
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "net.yaiba.keep"
-        minSdkVersion 21
-        targetSdkVersion 25
+        minSdkVersion 30
+        //targetSdkVersion 30.0.1
 
         versionCode 162
-        versionName "0.2.7.0"
-
+        versionName "0.2.8.0"
     }
 
     buildTypes {
@@ -24,21 +23,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     //升级到 Android Studio 3.0 + Gradle 4.1 遇到的一些坑及解决方案
     //http://blog.csdn.net/CHITTY1993/article/details/78667069
     //https://stackoverflow.com/questions/44239235/android-gradle-3-0-0-alpha2-plugin-cannot-set-the-value-of-read-only-property
-    android.applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            def newName = "${defaultConfig.applicationId }-${defaultConfig.versionName}-${releaseTime() }" + ".apk"
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            def newName = "${defaultConfig.applicationId}-${defaultConfig.versionName}-${releaseTime()}" + ".apk"
             outputFileName = newName
         }
     }
 }
 
 dependencies {
-    compile files('lib/pinyin4j-2.5.0.jar')
-    compile 'com.android.support:support-annotations:25.3.1'
-    compile 'com.android.support:support-v13:25.3.1'
-    compile 'com.android.support:gridlayout-v7:25.3.1'
+    implementation files('lib/pinyin4j-2.5.0.jar')
+    implementation 'com.android.support:support-annotations:25.3.1'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v13:25.3.1'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:gridlayout-v7:25.3.1'
 }

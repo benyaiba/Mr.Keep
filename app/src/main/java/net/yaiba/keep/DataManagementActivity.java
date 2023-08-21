@@ -32,8 +32,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+import android.provider.Settings;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.os.EnvironmentCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
 import android.view.KeyEvent;
@@ -52,7 +54,7 @@ public class DataManagementActivity extends Activity {
 	private int RECORD_ID = 0;
 	private int selectBakupFileIndex = 0;
 	private String[] bakFileArray ;
-	private String FILE_DIR_NAME = "yaiba.net//Mr.Keep";
+	private String FILE_DIR_NAME = "yaiba.net/Mr.Keep";
 	//private String fileName = "keepres.xml";
 	//private String fileNamePre = "keep_";
 	private String fileNameSuff = ".xml";
@@ -78,7 +80,8 @@ public class DataManagementActivity extends Activity {
 	private static final int REQUEST_EXTERNAL_STORAGE = 1;
 	private static String[] PERMISSIONS_STORAGE = {
 			"android.permission.READ_EXTERNAL_STORAGE",
-			"android.permission.WRITE_EXTERNAL_STORAGE" };
+			"android.permission.WRITE_EXTERNAL_STORAGE",
+			"android.permission.MANAGE_EXTERNAL_STORAGE"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,9 @@ public class DataManagementActivity extends Activity {
 
 		//检测是否有写的权限用
 		verifyStoragePermissions(DataManagementActivity.this);
+
+		//判断是否获取MANAGE_EXTERNAL_STORAGE权限
+		verifyExternalStorageManagerPermissions(DataManagementActivity.this);
 
 		//判断文件名中是否包含20170216020803!!!!!.xml 这种文件，如果目录中包含这种文件，将在画面最下方以红色文字提示。
 		List<String> bakupFileList = new ArrayList<String>();
@@ -286,8 +292,8 @@ public class DataManagementActivity extends Activity {
 
 		//检查目录并确定生成目录结构
 		//boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-		String path = getBasePath(this);
-		String baseDir = path + "/" + FILE_DIR_NAME;
+		String path = getExtendedMemoryPath(this);
+		String baseDir = path.replace("[","").replace("]","") + "/" + FILE_DIR_NAME;
 		Date dt = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm_ss");
 		//String fileName = fileNamePre + sdf.format(dt)+ fileNameSuff;
@@ -333,21 +339,62 @@ public class DataManagementActivity extends Activity {
 	}
 
 
+	private static final String ENV_SECONDARY_STORAGE = "SECONDARY_STORAGE";
+	public static String getExtendedMemoryPath(Context mContext) {
+		List<String> paths = new ArrayList<String>();
+		File sdCard = Environment.getExternalStorageDirectory();
+		paths.add(sdCard.getAbsolutePath());
+		final String rawSecondaryStorage = System.getenv(ENV_SECONDARY_STORAGE);
+		if (!TextUtils.isEmpty(rawSecondaryStorage)) {
+			String[] externalCards = rawSecondaryStorage.split(":");
+			for (int i = 0; i < externalCards.length; i++) {
+				String path = externalCards[i];
+				Log.e("debug", "path"+i+":"+path);
+				paths.add(path);
+			}
+			return paths.get(0);
+		}
+		Log.e("debug", paths.toString());
+		return paths.toString();
+	}
+
+
 	public String getBasePath(Context pContext){
 
 		final StorageManager storageManager = (StorageManager) pContext.getSystemService(Context.STORAGE_SERVICE);
 
 		try {
 			//得到StorageManager中的getVolumeList()方法的对象
-			final Method getVolumeList = storageManager.getClass().getMethod("getVolumeList");
+			Method getVolumeList = storageManager.getClass().getMethod("getVolumeList");
 			//---------------------------------------------------------------------
 
 			//得到StorageVolume类的对象
-			final Class<?> storageValumeClazz = Class.forName("android.os.storage.StorageVolume");
+			Class<?> storageValumeClazz = Class.forName("android.os.storage.StorageVolume");
 			//---------------------------------------------------------------------
-			//获得StorageVolume中的一些方法
-			final Method getPath = storageValumeClazz.getMethod("getPath");
-			Method isRemovable = storageValumeClazz.getMethod("isRemovable");
+
+			Method getPath = null;
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+				getPath = storageValumeClazz.getMethod("getPath");
+				Log.e("debug", getPath.toString());
+			}
+
+			List<android.os.storage.StorageVolume> volumes = storageManager.getStorageVolumes();
+			String[] path;
+			path = new String[volumes.size()];
+			for (int i = 0; i < volumes.size(); i++) {
+				android.os.storage.StorageVolume storageVolume = volumes.get(i);
+				String storagePath = "";
+				storagePath = (String) getPath.invoke(storageVolume);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+					storagePath = storageVolume.getDirectory().getAbsolutePath();
+				} else {
+					storagePath = (String) getPath.invoke(storageVolume);
+				}
+				path[i]=(storagePath);
+				Log.e("debug", path[i].toString()+i);
+			}
+
+			/*Method isRemovable = storageValumeClazz.getMethod("isRemovable");
 
 			Method mGetState = null;
 			//getState 方法是在4.4_r1之后的版本加的，之前版本（含4.4_r1）没有
@@ -376,7 +423,7 @@ public class DataManagementActivity extends Activity {
 						state = (String) mGetState.invoke(storageValume);
 					} else {
 						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-							state = Environment.getStorageState(new File(path));
+							state = Environment.getExternalStorageState(new File(path));
 						} else {
 							if (removable) {
 								state = EnvironmentCompat.getStorageState(new File(path));
@@ -384,8 +431,8 @@ public class DataManagementActivity extends Activity {
 								//不能移除的存储介质，一直是mounted
 								state = Environment.MEDIA_MOUNTED;
 							}
-							final File externalStorageDirectory = Environment.getExternalStorageDirectory();
-							Log.e("debug", "externalStorageDirectory==" + externalStorageDirectory);
+							//final File externalStorageDirectory = Environment.getExternalStorageDirectory();
+							//Log.e("debug", "externalStorageDirectory==" + externalStorageDirectory);
 						}
 					}
 
@@ -396,7 +443,14 @@ public class DataManagementActivity extends Activity {
 
 					return  path;
 				}
-			}
+			}*/
+
+			/*final String msg = "path==" + path
+					+ " ,removable==" + removable
+					+ ",state==" + state;
+			Log.e("debug", msg);
+
+			return  path;*/
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -608,6 +662,25 @@ public class DataManagementActivity extends Activity {
 				// 没有写的权限，去申请写的权限，会弹出对话框
 				ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//判断是否获取MANAGE_EXTERNAL_STORAGE权限
+	public static void verifyExternalStorageManagerPermissions(Activity activity) {
+
+		try {
+
+			//判断是否获取MANAGE_EXTERNAL_STORAGE权限
+			Boolean isHasStoragePermission = Environment.isExternalStorageManager();
+
+			if(!isHasStoragePermission){
+				Intent intent =new Intent();
+				intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+				activity.startActivity(intent);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

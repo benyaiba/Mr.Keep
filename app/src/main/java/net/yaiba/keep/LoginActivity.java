@@ -105,10 +105,12 @@ public class LoginActivity extends Activity {
 
 					if(indexLogoClickCount >= 16 && indexLogoClickCount < 88){
 						indexLogo.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.index_logo_egg1));
+						Toast.makeText(LoginActivity.this, "哇喔，你可真是个人才！GOGOGO!\n+"+indexLogoClickCount, Toast.LENGTH_SHORT).show();
 					}
 
 					if(indexLogoClickCount >= 88){
 						indexLogo.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.index_logo_egg2));
+						Toast.makeText(LoginActivity.this, "你是好奇宝宝吗？一直在这点？!\n+"+indexLogoClickCount, Toast.LENGTH_SHORT).show();
 					}
 
 					indexLogoClickCount++;
@@ -123,7 +125,8 @@ public class LoginActivity extends Activity {
 
 		//设置首页版本
 		TextView textView = (TextView) findViewById(R.id.version_id);
-		textView.setText(CustomUtils.getVersion(this)+"@2018");
+		//textView.setText(CustomUtils.getVersion(this)+"@2023");
+		textView.setText("@2023");
 
 	}
 	

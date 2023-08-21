@@ -12,11 +12,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v13.app.ActivityCompat;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -400,6 +407,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 				msg = this.getString(R.string.about_keep);
 				msg = msg + "\n\n";
 				msg = msg + "@"+getAppVersion();
+				msg = msg + "\n";
+				msg = msg + "AndroidSDK:"+getminSdkVersion();
 				showAboutDialog(title,msg);
 			break;
 			case MENU_SUPPORT:
@@ -415,12 +424,23 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 			break;
 			case MENU_CHECK_UPDATE:
 				title = this.getString(R.string.menu_checkupdate);//检查更新
-				msg = "";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
-				
-				updateTask = new UpdateTask(MainActivity.this,true);
-				updateTask.update();
-				
-				//showAboutDialog(title,msg); 
+				String url = "https://github.com/benyaiba/Mr.Keep/releases";
+				msg = url+"\n\n"+"点击确定，复制地址到剪贴板";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
+
+//				注释网络功能的原因：
+//				因为太多的原因导致访问github不太稳定，检测安装包状态很容易出错。
+//				另外因为申请了全部的网络访问权限，给使用者带来可能会存在安全隐患的影响。
+//				日后情况稳定了在酌情开通在线更新。
+//				暂时只支持手动下载并安装更新。
+//				AndroidManifest.xml
+//				<uses-permission android:name="android.permission.INTERNET"/>
+
+				//updateTask = new UpdateTask(MainActivity.this,true);
+				//updateTask.update();
+
+				//showAboutDialog(title,msg);
+				showConfirmAlertCopuUrlToClipDialog(title,msg,url);
+
 			break;
 			case MENU_IMPORT_EXPOERT://备份与恢复
 				Intent mainIntent = new Intent(MainActivity.this, DataManagementActivity.class);
@@ -437,7 +457,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 		}
 		return true;
 	}
-	 
+
 	public void showAboutDialog(String title,String msg){
 		AlertDialog.Builder builder= new AlertDialog.Builder(this);
 		builder.setIcon(android.R.drawable.ic_dialog_info);
@@ -468,6 +488,34 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             }).   
             create();   
     alertDialog.show();
+	}
+
+	public void showConfirmAlertCopuUrlToClipDialog(String title,String msg,String url){
+		Dialog alertDialog = new AlertDialog.Builder(this).
+				setTitle(title).
+				setMessage(msg).
+				setIcon(R.drawable.ic_launcher).
+				setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						ClipboardManager manager = (ClipboardManager) MainActivity.super.getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+						ClipData mClipData =ClipData.newRawUri("Label", Uri.parse(url));
+						manager.setPrimaryClip(mClipData);
+						Toast.makeText(MainActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
+
+					}
+				}).
+				setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+					}
+				}).
+				create();
+		alertDialog.show();
 	}
 	
 	 
@@ -592,6 +640,14 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
  		}
  		return null;
  	}
+
+	private String getminSdkVersion() {
+		try {
+			return Build.VERSION.SDK_INT+"";
+		} catch (Exception e) {
+		}
+		return null;
+	}
 	
 
 	//返回前设置前次的位置值

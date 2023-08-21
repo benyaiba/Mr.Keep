@@ -424,7 +424,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 			case MENU_CHECK_UPDATE:
 				title = this.getString(R.string.menu_checkupdate);//检查更新
 				String url = "https://github.com/benyaiba/Mr.Keep/releases";
-				msg = url+"\n\n"+"点击确定，复制下载地址到剪贴板\n※可能需要科学上网\n\n";//1.增加双服务器检测更新机制\n2.检查更新\n\n以上功能
+				msg = url+"\n\n"+"点击确定，复制下载地址到剪贴板\n※可能需要科学上网\n※更新前请备份现有数据\n\n";
 
 //				注释网络功能的原因：
 //				因为太多的原因导致访问github不太稳定，检测安装包状态很容易出错。
